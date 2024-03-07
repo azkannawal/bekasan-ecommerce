@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <main className="flex flex-col min-h-screen justify-center items-center">
-      <Carousel className="w-full max-w-3xl">
+      <Carousel className="w-full max-w-7xl">
         <h1 className="uppercase text-center font-bold text-3xl mb-7">
           Selamat Datang
         </h1>
@@ -56,8 +56,8 @@ const Home = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="h-14 w-14" />
+        <CarouselNext className="h-14 w-14" />
       </Carousel>
     </main>
   );
