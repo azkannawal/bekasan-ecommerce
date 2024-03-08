@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "./../components/fragments/Navbar";
+import Navbar from "../components/fragments/HeaderAuth";
 import { useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 
@@ -29,12 +29,17 @@ const ResetConfirm = () => {
               onClick={() => toggle(1)}
               className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
             >
-              {visible1 ? <RiEyeOffFill /> : <RiEyeFill />}
+              {visible1 ? (
+                <RiEyeOffFill className="text-slate-400" />
+              ) : (
+                <RiEyeFill className="text-[#0F172A]" />
+              )}
             </span>
             <Input
               placeholder="Kata sandi baru"
               type={visible1 ? "text" : "password"}
               autoComplete="new-password"
+              required
             />
           </div>
           <div className="relative w-full">
@@ -42,12 +47,17 @@ const ResetConfirm = () => {
               onClick={() => toggle(2)}
               className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
             >
-              {visible2 ? <RiEyeOffFill /> : <RiEyeFill />}
+              {visible2 ? (
+                <RiEyeOffFill className="text-slate-400" />
+              ) : (
+                <RiEyeFill className="text-[#0F172A]" />
+              )}
             </span>
             <Input
               placeholder="Konfirmasi Kata sandi baru"
               type={visible2 ? "text" : "password"}
               autoComplete="new-password"
+              required
             />
           </div>
           <Button className="h-12 px-16">Kirim</Button>

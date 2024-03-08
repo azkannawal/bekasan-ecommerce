@@ -48,7 +48,7 @@ const Address = () => {
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Input id="searchInput" type="text" placeholder="Alamat" />
+      <Input id="searchInput" type="text" placeholder="Alamat" required />
       <Button className="hidden" onClick={handlePlaceSelect}>
         Search
       </Button>

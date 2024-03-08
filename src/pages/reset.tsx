@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "./../components/fragments/Navbar";
+import Navbar from "../components/fragments/HeaderAuth";
 
 const Reset = () => {
   return (
@@ -11,7 +11,7 @@ const Reset = () => {
           <h1 className="self-start text-2xl font-semibold mb-3">
             Reset kata sandi
           </h1>
-          <Input placeholder="Email akun UB" type="email" />
+          <Input placeholder="Email akun UB" type="email" required />
           <Button className="h-12 px-16">Kirim</Button>
         </form>
       </div>

@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "./../components/fragments/Navbar";
+import Navbar from "../components/fragments/HeaderAuth";
 import { useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 
@@ -19,18 +19,24 @@ const Login = () => {
             placeholder="Email akun UB"
             type="email"
             autoComplete="email"
+            required
           />
           <div className="relative w-full">
             <span
               onClick={toggle}
               className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
             >
-              {visible ? <RiEyeOffFill /> : <RiEyeFill />}
+              {visible ? (
+                <RiEyeOffFill className="text-slate-400" />
+              ) : (
+                <RiEyeFill className="text-[#0F172A]" />
+              )}
             </span>
             <Input
               placeholder="Kata sandi"
               type={visible ? "text" : "password"}
               autoComplete="new-password"
+              required
             />
           </div>
           <Button className="h-12 px-16">Masuk</Button>
