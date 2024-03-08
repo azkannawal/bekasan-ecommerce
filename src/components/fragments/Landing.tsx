@@ -28,8 +28,8 @@ const Landing = () => {
   return (
     <>
       {hide ? (
-        <div className="flex flex-col min-h-screen justify-center items-center relative z-10">
-          <Carousel className="w-full max-w-7xl">
+        <div className="flex flex-col min-h-screen justify-center items-center fixed right-0 left-0 top-0 z-10">
+          <Carousel className="w-full max-w-4xl bg-white rounded-xl p-5 absolute z-10">
             <h1
               className="uppercase text-center font-bold text-3xl mb-7"
               onClick={CloseLanding}
@@ -67,9 +67,10 @@ const Landing = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="h-14 w-14" />
+            <CarouselPrevious className=" h-14 w-14" />
             <CarouselNext className="h-14 w-14" />
           </Carousel>
+          <div className="bg-black/10 w-full min-h-screen backdrop-blur-lg relative"></div>
         </div>
       ) : (
         <div></div>

@@ -8,7 +8,8 @@ const Address = () => {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+      // apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+      apiKey: "AIzaSyBq-qrMQpKfY8moN_1bOeEk0NIf8T9uwpY",
       libraries: ["places"],
     });
 

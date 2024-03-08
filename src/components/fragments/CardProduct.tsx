@@ -1,6 +1,6 @@
 const CardProduct = () => {
   return (
-    <main className="flex flex-col justify-center items-center relative">
+    <main className="flex flex-col justify-center items-center relative -z-10">
       <h1 className="self-start mt-24 pt-8 pb-6 px-12 font-bold text-3xl text-[#0F172A]">
         Kategori
       </h1>
