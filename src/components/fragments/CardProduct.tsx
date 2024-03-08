@@ -6,9 +6,8 @@ const CardProduct = () => {
       </h1>
       <div className="grid grid-cols-4 gap-x-32 gap-y-14 ">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((index) => (
-          <div className="flex flex-col text-center gap-2">
+          <div className="flex flex-col text-center gap-2" key={index}>
             <img
-              key={index}
               className="w-60 rounded-lg"
               src={`product0${1}.png`}
               alt={`img`}

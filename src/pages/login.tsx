@@ -12,8 +12,9 @@ const Login = () => {
   return (
     <main className="">
       <Navbar title="Masuk" />
-      <div className="flex justify-center items-center min-h-screen relative bg-[#135699]">
-        <form className="flex flex-col justify-center items-center mt-7 w-96 gap-7 p-6 rounded-lg bg-white">
+      <div className="flex justify-around items-center min-h-screen relative bg-[#135699] pt-8 px-10">
+        <img className="w-[450px] max-w-lg" src="./login01.png" alt="img" />
+        <form className="flex flex-col justify-center items-center mt-7 w-[450px] gap-7 p-6 rounded-lg bg-white">
           <h1 className="self-start text-2xl font-semibold mb-7">Masuk</h1>
           <Input
             placeholder="Email akun UB"
