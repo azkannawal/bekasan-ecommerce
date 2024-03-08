@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-const AdressInput: React.FC = () => {
+const Address = () => {
   const [autocomplete, setAutocomplete] = useState<any | null>(null);
 
   useEffect(() => {
@@ -31,10 +31,7 @@ const AdressInput: React.FC = () => {
       setAutocomplete(autocompleteInstance);
     });
 
-    // Cleanup
-    return () => {
-      // Cleanup code here if needed
-    };
+    return () => {};
   }, []);
 
   const handlePlaceSelect = () => {
@@ -50,14 +47,13 @@ const AdressInput: React.FC = () => {
   };
 
   return (
-    <div className="px-[200px] py-2">
-      <h1>Google Maps Search</h1>
-      <div className="flex gap-2">
-        <Input id="searchInput" type="text" placeholder="Enter a location" />
-        <Button onClick={handlePlaceSelect}>Search</Button>
-      </div>
+    <div className="flex flex-col gap-2 w-full">
+      <Input id="searchInput" type="text" placeholder="Alamat" />
+      <Button className="hidden" onClick={handlePlaceSelect}>
+        Search
+      </Button>
     </div>
   );
 };
 
-export default AdressInput;
+export default Address;

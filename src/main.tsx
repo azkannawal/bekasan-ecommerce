@@ -4,7 +4,10 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/home.tsx";
 import NotFound from "./pages/notfound.tsx";
-import AdressInput from "./components/fragments/AdressInput.tsx";
+import Login from "./pages/login.tsx";
+import Register from './pages/register';
+import Reset from "./pages/reset.tsx";
+import ResetConfirm from './pages/resetconfirm';
 
 const router = createBrowserRouter([
   {
@@ -13,8 +16,20 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
   },
   {
-    path: "/gmaps",
-    element: <AdressInput />,
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/reset",
+    element: <Reset />,
+  },
+  {
+    path: "/resetconfirm",
+    element: <ResetConfirm />,
   },
 ]);
 
