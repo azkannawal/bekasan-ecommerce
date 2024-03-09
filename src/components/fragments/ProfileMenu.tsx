@@ -6,7 +6,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useUser } from "@/context/UserContext";
+
 const ProfileMenu = () => {
+  const { user } = useUser();
+  const username = user ? user.username : "";
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -16,7 +20,7 @@ const ProfileMenu = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuLabel className="font-normal">
-          User: Azkan Nawal
+          {user ? `user: ${username}` : null}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-red-700">Log out</DropdownMenuItem>
