@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   const [hide, setHide] = useState(true);
@@ -31,11 +32,11 @@ const Landing = () => {
   return (
     <>
       {hide ? (
-        <div className="flex flex-col min-h-screen justify-center items-center fixed right-0 left-0 top-0 z-10">
+        <div className="flex flex-col min-h-screen justify-center items-center fixed right-0 left-0 top-0 z-20">
           <Carousel className="w-full max-w-4xl bg-white rounded-xl p-4 absolute z-10">
             <div className="flex justify-end w-full">
               <IoIosCloseCircle
-                size={30}
+                size={36}
                 color="#0F172A"
                 onClick={CloseLanding}
                 className="cursor-pointer"
@@ -66,7 +67,9 @@ const Landing = () => {
                           <p className="uppercase font-bold text-xl mt-3 text-[#0F172A]">
                             {feature[index]}
                           </p>
-                          <Button>Mulai</Button>
+                          <Link to="register">
+                            <Button>Mulai</Button>
+                          </Link>
                         </>
                       )}
                     </CardContent>
@@ -89,7 +92,7 @@ const Landing = () => {
             <CarouselPrevious className=" h-14 w-14" />
             <CarouselNext className="h-14 w-14" />
           </Carousel>
-          <div className="bg-black/10 w-full min-h-screen backdrop-blur-lg relative"></div>
+          <div className="bg-slate-800/40 w-full min-h-screen backdrop-blur-md relative"></div>
         </div>
       ) : (
         <div></div>

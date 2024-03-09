@@ -2,11 +2,12 @@ import Landing from "./../components/fragments/Landing";
 import CardProduct from "../components/fragments/CardProduct";
 import Navbar from "./../components/fragments/Navbar";
 const Home = () => {
+  const verify = false;
   return (
     <div className="relative">
-      <Landing />
+      {!verify ? <Landing /> : null}
+      <Navbar />
       <div className="relative">
-        <Navbar />
         <CardProduct />
       </div>
     </div>

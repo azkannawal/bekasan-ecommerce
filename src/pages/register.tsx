@@ -26,7 +26,7 @@ const Register = () => {
       <div className="flex justify-around items-center relative bg-[#135699] pt-4 px-10 min-h-screen">
         <img
           className="w-[450px] max-w-lg pt-16"
-          src="./register01.png"
+          src="./login01.png"
           alt="img"
         />
         <form
