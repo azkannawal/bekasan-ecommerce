@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
-import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { useUser } from "@/context/UserContext";
 
 const Address = () => {
-  const [autocomplete, setAutocomplete] = useState<any | null>(null);
+  const { setUser } = useUser();
+  const [address, setAddress] = useState<string>("");
+  const [longitude, setLongitude] = useState<number>(0);
+  const [latitude, setLatitude] = useState<number>(0);
 
   useEffect(() => {
+    const key = import.meta.env.VITE_ADDRESS_KEY;
     const loader = new Loader({
-      apiKey: import.meta.env.ADDRESS_API,
+      apiKey: key,
       libraries: ["places"],
     });
 
@@ -28,30 +32,38 @@ const Address = () => {
         { bounds: malangBounds, strictBounds: true }
       );
 
-      setAutocomplete(autocompleteInstance);
+      autocompleteInstance.addListener("place_changed", () => {
+        const place = autocompleteInstance.getPlace();
+        if (place.geometry && place.geometry.location) {
+          const latitude = place.geometry.location.lat();
+          const longitude = place.geometry.location.lng();
+          setAddress(place.formatted_address); // Simpan alamat ke dalam state address
+          setLongitude(longitude);
+          setLatitude(latitude);
+        }
+      });
     });
-
-    return () => {};
   }, []);
 
-  const handlePlaceSelect = () => {
-    if (autocomplete) {
-      const addressObject = autocomplete.getPlace();
-      if (addressObject) {
-        const latitude = addressObject.geometry.location.lat();
-        const longitude = addressObject.geometry.location.lng();
-        console.log("Latitude:", latitude);
-        console.log("Longitude:", longitude);
-      }
+  useEffect(() => {
+    setUser({ address: address, longitude: longitude, latitude: latitude });
+  }, [address, longitude, latitude]);
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
     }
   };
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Input id="searchInput" type="text" placeholder="Alamat" required />
-      <Button className="hidden" onClick={handlePlaceSelect}>
-        Search
-      </Button>
+      <Input
+        id="searchInput"
+        type="text"
+        placeholder="Alamat"
+        required
+        onKeyPress={handleKeyPress}
+      />
     </div>
   );
 };

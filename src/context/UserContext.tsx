@@ -1,12 +1,14 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-interface User {
-  username: string;
+interface Address {
+  address: string,
+  longitude: number;
+  latitude: number;
 }
 
 interface UserContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: Address | null;
+  setUser: React.Dispatch<React.SetStateAction<Address | null>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -19,12 +21,8 @@ export const useUser = (): UserContextType => {
   return context;
 };
 
-interface UserProviderProps {
-  children: ReactNode;
-}
-
-export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
-  const [user, setUser] = useState<User | null>(null);
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<Address | null>(null);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

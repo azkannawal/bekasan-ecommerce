@@ -5,14 +5,19 @@ import Address from "@/components/fragments/Address";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useState } from "react";
 import axios from "axios";
+import { useUser } from "@/context/UserContext";
 
-const Register = () => {
+const Register: React.FC = () => {
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
-  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const { user } = useUser();
+  const address = user ? user.address : "";
+  const longitude = user ? user.longitude : "";
+  const latitude = user ? user.latitude : "";
 
   const toggle = (field: number): void => {
     if (field === 1) {
@@ -22,30 +27,33 @@ const Register = () => {
     }
   };
 
-  const onSubmit = async () => {
-    const options = {
-      method: "POST",
-      url: "https//9a44-182-4-132-249.ngrok-free.app/api/v1/auth/register",
-      data: {
-        name: "John Doe",
-        email: "johndoe@student.ub.ac.id",
-        password: "password_john_doe",
-        confirm_password: "password_john_doe",
-        address:
-          "Jl. Veteran, Ketawanggede, Kec. Lowokwaru, Kota Malang, Jawa Timur 65145",
-        latitude: -7.95217615839509,
-        longitude: 112.61271625437,
-      },
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = {
+      name: name,
+      email: email,
+      password: password,
+      confirm_password: confirm,
+      address: address,
+      latitude: longitude,
+      longitude: latitude,
     };
-    await axios
-      .request(options)
-      .then(function (response) {
-        response.data;
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    console.log(data);
+    try {
+      const response = await axios.post(
+        "https://seahorse-cool-kodiak.ngrok-free.app/api/v1/auth/register",
+        data
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   };
 
   return (
@@ -57,7 +65,10 @@ const Register = () => {
           src="./login01.png"
           alt="img"
         />
-        <div className="flex flex-col justify-center items-center mt-16 w-[450px] gap-7 p-6 rounded-lg bg-white">
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-col justify-center items-center mt-16 w-[450px] gap-7 p-6 rounded-lg bg-white"
+        >
           <h1 className="self-start text-2xl font-semibold mb-3">Daftar</h1>
           <Input
             placeholder="Nama akun"
@@ -65,6 +76,7 @@ const Register = () => {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
           <Input
             placeholder="Email akun UB"
@@ -73,6 +85,7 @@ const Register = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
           <div className="relative w-full">
             <span
@@ -91,6 +104,7 @@ const Register = () => {
               autoComplete="new-password"
               required
               value={password}
+              onKeyPress={handleKeyPress}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -111,14 +125,13 @@ const Register = () => {
               autoComplete="new-password"
               required
               value={confirm}
+              onKeyPress={handleKeyPress}
               onChange={(e) => setConfirm(e.target.value)}
             />
           </div>
           <Address />
-          <Button className="h-12 px-16" onClick={onSubmit}>
-            Daftar
-          </Button>
-        </div>
+          <Button className="h-12 px-16">Daftar</Button>
+        </form>
       </div>
     </main>
   );

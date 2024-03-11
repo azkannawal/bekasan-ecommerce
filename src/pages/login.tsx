@@ -1,19 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Navbar from "../components/fragments/HeaderAuth";
-import { useEffect, useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
-import { useUser } from "@/context/UserContext";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
-  const { user, setUser } = useUser();
   const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setUser({ username: "azkan nawal" });
-    return () => {};
-  }, []);
 
   const toggle = () => {
     setVisible(!visible);
@@ -27,7 +20,6 @@ const Login = () => {
       <div className="flex justify-around items-center min-h-screen relative bg-[#135699] pt-8 px-10">
         <img className="w-[450px] max-w-lg" src="./login01.png" alt="img" />
         <form className="flex flex-col justify-center items-center mt-7 w-[450px] gap-7 p-6 rounded-lg bg-white">
-          {user ? <h1>{user.username}</h1> : null}
           <h1 className="self-start text-2xl font-semibold mb-7">Masuk</h1>
           <Input
             placeholder="Email akun UB"
