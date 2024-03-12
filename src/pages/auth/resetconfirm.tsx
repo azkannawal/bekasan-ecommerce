@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "../components/fragments/HeaderAuth";
+import Navbar from "../../components/fragments/HeaderAuth";
 import { useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 

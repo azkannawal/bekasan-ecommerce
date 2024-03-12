@@ -1,20 +1,26 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "../components/fragments/HeaderAuth";
+import Navbar from "../../components/fragments/HeaderAuth";
 import Address from "@/components/fragments/Address";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useState } from "react";
-import axios from "axios";
 import { useUser } from "@/context/UserContext";
+import { axiosInstance } from "@/lib/axios";
+import { useNavigate } from "react-router-dom";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useToast } from "@/components/ui/use-toast";
 
 const Register: React.FC = () => {
+  const { user } = useUser();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const { user } = useUser();
+  const [loadButton, setLoadButton] = useState(false);
   const address = user ? user.address : "";
   const longitude = user ? user.longitude : "";
   const latitude = user ? user.latitude : "";
@@ -35,18 +41,31 @@ const Register: React.FC = () => {
       password: password,
       confirm_password: confirm,
       address: address,
-      latitude: longitude,
-      longitude: latitude,
+      latitude: latitude,
+      longitude: longitude,
     };
-    console.log(data);
+
     try {
-      const response = await axios.post(
-        "https://seahorse-cool-kodiak.ngrok-free.app/api/v1/auth/register",
-        data
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+      setLoadButton(true);
+      const response = await axiosInstance.post("auth/register", data);
+      if (response.status === 201 || response.status === 209) {
+        toast({
+          description: response.data.message,
+        });
+        navigate("/login");
+      }
+    } catch (error: any) {
+      const errorMessage = error.response.data.message;
+      const errorDescriptions = Object.values(error.response.data.errors);
+      errorDescriptions.map((description) => (
+        toast({
+          variant: "destructive",
+          title: errorMessage,
+          description: description,
+        })
+      ));
+    } finally {
+      setLoadButton(false);
     }
   };
 
@@ -104,8 +123,8 @@ const Register: React.FC = () => {
               autoComplete="new-password"
               required
               value={password}
-              onKeyPress={handleKeyPress}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
           </div>
           <div className="relative w-full">
@@ -130,7 +149,14 @@ const Register: React.FC = () => {
             />
           </div>
           <Address />
-          <Button className="h-12 px-16">Daftar</Button>
+          {loadButton ? (
+            <Button disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Tunggu
+            </Button>
+          ) : (
+            <Button className="h-12 px-16">Daftar</Button>
+          )}
         </form>
       </div>
     </main>
