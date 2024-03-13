@@ -15,27 +15,24 @@ import { IoIosArrowDown } from "react-icons/io";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
-const categories = [
-  { name: "Sepatu", state: useState<Checked>(false) },
-  { name: "Tas", state: useState<Checked>(false) },
-  { name: "Lemari", state: useState<Checked>(false) },
-];
-
-const prices = [
-  { name: "Rp 0 - Rp 249.999", state: useState<Checked>(false) },
-  { name: "Rp 250.000 - Rp 499.999", state: useState<Checked>(false) },
-  { name: "Rp 500.000 - Rp 999.999", state: useState<Checked>(false) },
-  { name: "> Rp 1.000.000", state: useState<Checked>(false) },
-];
-
-const distances = [
-  { name: "0 - 1 KM", state: useState<Checked>(false) },
-  { name: "1,1 KM - 2 KM", state: useState<Checked>(false) },
-  { name: "2,1 KM - 4 KM", state: useState<Checked>(false) },
-  { name: "> 4 KM", state: useState<Checked>(false) },
-];
-
 const Search = () => {
+  const categories = [
+    { name: "Sepatu", state: useState<Checked>(false) },
+    { name: "Tas", state: useState<Checked>(false) },
+    { name: "Lemari", state: useState<Checked>(false) },
+  ];
+  const prices = [
+    { name: "Rp 0 - Rp 249.999", state: useState<Checked>(false) },
+    { name: "Rp 250.000 - Rp 499.999", state: useState<Checked>(false) },
+    { name: "Rp 500.000 - Rp 999.999", state: useState<Checked>(false) },
+    { name: "> Rp 1.000.000", state: useState<Checked>(false) },
+  ];
+  const distances = [
+    { name: "0 - 1 KM", state: useState<Checked>(false) },
+    { name: "1,1 KM - 2 KM", state: useState<Checked>(false) },
+    { name: "2,1 KM - 4 KM", state: useState<Checked>(false) },
+    { name: "> 4 KM", state: useState<Checked>(false) },
+  ];
   const [dropdowns, setDropdowns] = useState([0, 0, 0]);
 
   const toggleDropdown = (index: number): void => {
