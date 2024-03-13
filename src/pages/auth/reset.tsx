@@ -3,20 +3,41 @@ import { Button } from "@/components/ui/button";
 import Navbar from "../../components/fragments/HeaderAuth";
 import { useState } from "react";
 import { axiosInstance } from "@/lib/axios";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Reset = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [loadButton, setLoadButton] = useState(false);
   const [email, setEmail] = useState("");
+
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
       email: email,
     };
-    console.log(data);
+
     try {
+      setLoadButton(true);
       const response = await axiosInstance.post("auth/reset", data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+      toast({
+        description: response.data.message,
+      });
+      navigate("/resetconfirm"); //soon
+    } catch (error: any) {
+      const errorMessage = error.response.data.message;
+      const errorDescriptions = Object.values(error.response.data.errors);
+      errorDescriptions.map((description) =>
+        toast({
+          variant: "destructive",
+          title: errorMessage,
+          description: description,
+        })
+      );
+    } finally {
+      setLoadButton(false);
     }
   };
 
@@ -31,7 +52,7 @@ const Reset = () => {
         />
         <form
           onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-24 w-[450px] gap-7 p-6 rounded-lg bg-white"
+          className="flex flex-col justify-center items-center mt-24 w-[450px] gap-6 p-6 rounded-lg bg-white"
         >
           <h1 className="self-start text-2xl font-semibold mb-3">
             Reset kata sandi
@@ -43,7 +64,14 @@ const Reset = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <Button className="h-12 px-16">Kirim</Button>
+          {loadButton ? (
+            <Button className="h-12 px-12" disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Tunggu
+            </Button>
+          ) : (
+            <Button className="h-12 px-16">Kirim</Button>
+          )}
         </form>
       </div>
     </main>

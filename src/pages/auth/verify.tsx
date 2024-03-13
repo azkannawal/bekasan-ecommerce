@@ -3,8 +3,12 @@ import { Button } from "@/components/ui/button";
 import Navbar from "../../components/fragments/HeaderAuth";
 import { useState } from "react";
 import { axiosInstance } from "@/lib/axios";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useToast } from "@/components/ui/use-toast";
 
 const Verify = () => {
+  const { toast } = useToast();
+  const [loadButton, setLoadButton] = useState(false);
   const [otp, setOtp] = useState("");
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -13,12 +17,25 @@ const Verify = () => {
       id: "05f1c0bd-926b-4255-b6bd-708a4caea756",
       verification_code: otp,
     };
-    console.log(data);
+
     try {
+      setLoadButton(true);
       const response = await axiosInstance.patch("auth/register/verify", data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+      toast({
+        description: response.data.message,
+      });
+    } catch (error: any) {
+      const errorMessage = error.response.data.message;
+      const errorDescriptions = Object.values(error.response.data.errors);
+      errorDescriptions.map((description) =>
+        toast({
+          variant: "destructive",
+          title: errorMessage,
+          description: description,
+        })
+      );
+    } finally {
+      setLoadButton(false);
     }
   };
 
@@ -26,12 +43,24 @@ const Verify = () => {
     const data = {
       id: "05f1c0bd-926b-4255-b6bd-708a4caea756",
     };
-    console.log(data);
     try {
+      setLoadButton(true);
       const response = await axiosInstance.patch("auth/register/resend", data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+      toast({
+        description: response.data.message,
+      });
+    } catch (error: any) {
+      const errorMessage = error.response.data.message;
+      const errorDescriptions = Object.values(error.response.data.errors);
+      errorDescriptions.map((description) =>
+        toast({
+          variant: "destructive",
+          title: errorMessage,
+          description: description,
+        })
+      );
+    } finally {
+      setLoadButton(false);
     }
   };
 
@@ -52,16 +81,19 @@ const Verify = () => {
             <h1 className="text-2xl font-semibold mb-2">
               Masukkan kode verifikasi
             </h1>
-            <h2 className="">
+            <p>
               Kode verifikasi tidak diterima?{" "}
-              <span onClick={resend} className="text-[#135699] underline">
-                resend
+              <span
+                onClick={resend}
+                className="font-bold text-[#0F172A] hover:underline"
+              >
+                Kirim ulang
               </span>
-            </h2>
+            </p>
           </div>
 
           <Input
-            placeholder="Kode verifikasi"
+            placeholder="Kode verifikasi(6 Digit)"
             type="text"
             pattern="[0-9]{6}"
             value={otp}
@@ -73,7 +105,14 @@ const Verify = () => {
             }}
             required
           />
-          <Button className="h-12 px-16">Kirim</Button>
+          {loadButton ? (
+            <Button className="h-12 px-12" disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Tunggu
+            </Button>
+          ) : (
+            <Button className="h-12 px-16">Kirim</Button>
+          )}
         </form>
       </div>
     </main>

@@ -3,16 +3,58 @@ import { Button } from "@/components/ui/button";
 import Navbar from "../../components/fragments/HeaderAuth";
 import { useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
+import { axiosInstance } from "@/lib/axios";
+import { useToast } from "@/components/ui/use-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const ResetConfirm = () => {
+  const [loadButton, setLoadButton] = useState(false)
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const { toast } = useToast();
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = {
+      password: password,
+      confirm_password: confirm,
+    };
+    const token = "";
+
+    try {
+      setLoadButton(true);
+      const response = await axiosInstance.post(`auth/reset/${token}`, data);
+      toast({
+        description: response.data.message,
+      });
+    } catch (error: any) {
+      const errorMessage = error.response.data.message;
+      const errorDescriptions = Object.values(error.response.data.errors);
+      errorDescriptions.map((description) =>
+        toast({
+          variant: "destructive",
+          title: errorMessage,
+          description: description,
+        })
+      );
+    } finally {
+      setLoadButton(false);
+    }
+  };
 
   const toggle = (field: number): void => {
     if (field === 1) {
       setVisible1(!visible1);
     } else if (field === 2) {
       setVisible2(!visible2);
+    }
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
     }
   };
 
@@ -25,7 +67,7 @@ const ResetConfirm = () => {
           src="./reset01.png"
           alt="img"
         />
-        <form className="flex flex-col justify-center items-center mt-24 w-[450px] gap-7 p-6 rounded-lg bg-white">
+        <form onSubmit={onSubmit} className="flex flex-col justify-center items-center mt-24 w-[450px] gap-7 p-6 rounded-lg bg-white">
           <h1 className="self-start text-2xl font-semibold mb-3">
             Reset kata sandi
           </h1>
@@ -45,6 +87,9 @@ const ResetConfirm = () => {
               type={visible1 ? "text" : "password"}
               autoComplete="new-password"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
           </div>
           <div className="relative w-full">
@@ -63,9 +108,19 @@ const ResetConfirm = () => {
               type={visible2 ? "text" : "password"}
               autoComplete="new-password"
               required
+              value={confirm}
+              onKeyPress={handleKeyPress}
+              onChange={(e) => setConfirm(e.target.value)}
             />
           </div>
-          <Button className="h-12 px-16">Kirim</Button>
+          {loadButton ? (
+            <Button className="h-12 px-12" disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Tunggu
+            </Button>
+          ) : (
+            <Button className="h-12 px-16">Kirim</Button>
+          )}
         </form>
       </div>
     </main>

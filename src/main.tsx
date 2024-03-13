@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/register/verify",
+    path: "/verify",
     element: <Verify />,
   },
   {

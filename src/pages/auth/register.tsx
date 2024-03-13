@@ -6,7 +6,7 @@ import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { axiosInstance } from "@/lib/axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -14,24 +14,16 @@ const Register: React.FC = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [loadButton, setLoadButton] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [loadButton, setLoadButton] = useState(false);
   const address = user ? user.address : "";
   const longitude = user ? user.longitude : "";
   const latitude = user ? user.latitude : "";
-
-  const toggle = (field: number): void => {
-    if (field === 1) {
-      setVisible1(!visible1);
-    } else if (field === 2) {
-      setVisible2(!visible2);
-    }
-  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,24 +40,30 @@ const Register: React.FC = () => {
     try {
       setLoadButton(true);
       const response = await axiosInstance.post("auth/register", data);
-      if (response.status === 201 || response.status === 209) {
-        toast({
-          description: response.data.message,
-        });
-        navigate("/login");
-      }
+      toast({
+        description: response.data.message,
+      });
+      navigate("/login");
     } catch (error: any) {
       const errorMessage = error.response.data.message;
       const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) => (
+      errorDescriptions.map((description) =>
         toast({
           variant: "destructive",
           title: errorMessage,
           description: description,
         })
-      ));
+      );
     } finally {
       setLoadButton(false);
+    }
+  };
+
+  const toggle = (field: number): void => {
+    if (field === 1) {
+      setVisible1(!visible1);
+    } else if (field === 2) {
+      setVisible2(!visible2);
     }
   };
 
@@ -86,7 +84,7 @@ const Register: React.FC = () => {
         />
         <form
           onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-16 w-[450px] gap-7 p-6 rounded-lg bg-white"
+          className="flex flex-col justify-center items-center mt-16 w-[450px] gap-6 p-6 rounded-lg bg-white"
         >
           <h1 className="self-start text-2xl font-semibold mb-3">Daftar</h1>
           <Input
@@ -150,13 +148,17 @@ const Register: React.FC = () => {
           </div>
           <Address />
           {loadButton ? (
-            <Button disabled>
+            <Button className="h-12 px-12" disabled>
               <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               Tunggu
             </Button>
           ) : (
             <Button className="h-12 px-16">Daftar</Button>
           )}
+          <p className="text-center ">
+            Sudah punya akun?{" "}
+            <Link to="/login" className="font-bold hover:underline">Masuk</Link>
+          </p>
         </form>
       </div>
     </main>
