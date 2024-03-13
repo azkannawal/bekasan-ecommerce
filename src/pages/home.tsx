@@ -8,7 +8,7 @@ const Home = () => {
       {!verify ? <Landing /> : null}
       <Navbar />
       <div className="relative">
-        <CardProduct />
+        <CardProduct style="w-full" />
       </div>
     </div>
   );

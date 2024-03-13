@@ -1,8 +1,8 @@
-interface NavbarProps {
+interface Props {
   title: string;
 }
 
-const HeaderAuth: React.FC<NavbarProps> = ({ title }) => {
+const HeaderAuth: React.FC<Props> = ({ title }) => {
   return (
     <div className="flex items-center gap-4 absolute w-full z-10 px-4 bg-white">
       <img className="w-[80px]" src="../logo.png" alt="img" />

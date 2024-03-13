@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-const CardProduct = () => {
+interface Props {
+  style: string;
+}
+
+const CardProduct: React.FC<Props> = ({ style }) => {
   const name = [
     "Tas",
     "Lemari Penyimpanan",
@@ -12,7 +16,9 @@ const CardProduct = () => {
     "Sandal",
   ];
   return (
-    <main className="flex flex-col justify-center items-center relative z-1 pb-12">
+    <main
+      className={`${style} flex flex-col justify-center items-center relative z-1 pb-12`}
+    >
       <h1 className="self-start mt-24 pt-8 pb-8 px-12 font-bold text-3xl text-[#0F172A]">
         Kategori
       </h1>

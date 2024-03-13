@@ -11,6 +11,7 @@ import ResetConfirm from "./pages/auth/resetconfirm.tsx";
 import { UserProvider } from "./context/UserContext.tsx";
 import Verify from "./pages/auth/verify.tsx";
 import { Toaster } from "./components/ui/toaster";
+import Search from "./pages/search.tsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/resetconfirm",
     element: <ResetConfirm />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
   },
 ]);
 
