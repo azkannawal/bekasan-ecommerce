@@ -5,16 +5,20 @@ import { useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@/context/RegisterContext";
 
 const Verify = () => {
+  const { userId } = useUser();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loadButton, setLoadButton] = useState(false);
   const [otp, setOtp] = useState("");
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = {
-      id: "05f1c0bd-926b-4255-b6bd-708a4caea756",
+      id: userId,
       verification_code: otp,
     };
 
@@ -22,18 +26,16 @@ const Verify = () => {
       setLoadButton(true);
       const response = await axiosInstance.patch("auth/register/verify", data);
       toast({
+        variant: "sucsess",
         description: response.data.message,
       });
+      navigate("/login");
     } catch (error: any) {
       const errorMessage = error.response.data.message;
-      const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) =>
-        toast({
-          variant: "destructive",
-          title: errorMessage,
-          description: description,
-        })
-      );
+      toast({
+        variant: "destructive",
+        title: errorMessage,
+      });
     } finally {
       setLoadButton(false);
     }
@@ -41,24 +43,21 @@ const Verify = () => {
 
   const resend = async () => {
     const data = {
-      id: "05f1c0bd-926b-4255-b6bd-708a4caea756",
+      id: userId,
     };
     try {
       setLoadButton(true);
       const response = await axiosInstance.patch("auth/register/resend", data);
       toast({
+        variant: "sucsess",
         description: response.data.message,
       });
     } catch (error: any) {
       const errorMessage = error.response.data.message;
-      const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) =>
-        toast({
-          variant: "destructive",
-          title: errorMessage,
-          description: description,
-        })
-      );
+      toast({
+        variant: "destructive",
+        title: errorMessage,
+      });
     } finally {
       setLoadButton(false);
     }

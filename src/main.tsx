@@ -8,10 +8,12 @@ import Login from "./pages/auth/login.tsx";
 import Register from "./pages/auth/register.tsx";
 import Reset from "./pages/auth/reset.tsx";
 import ResetConfirm from "./pages/auth/resetconfirm.tsx";
-import { UserProvider } from "./context/UserContext.tsx";
+import { AddressProvider } from "./context/AddressContext.tsx";
 import Verify from "./pages/auth/verify.tsx";
 import { Toaster } from "./components/ui/toaster";
 import Search from "./pages/search.tsx";
+import { UserProvider } from "./context/RegisterContext.tsx";
+import { AuthProvider } from "./context/LoginContext";
 
 const router = createBrowserRouter([
   {
@@ -47,9 +49,13 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <UserProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </UserProvider>
+    <AuthProvider>
+      <UserProvider>
+        <AddressProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+        </AddressProvider>
+      </UserProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

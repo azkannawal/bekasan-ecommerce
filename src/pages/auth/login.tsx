@@ -7,8 +7,10 @@ import { useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/context/LoginContext";
 
 const Login = () => {
+  const { setTokens } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
@@ -27,19 +29,24 @@ const Login = () => {
       setLoadButton(true);
       const response = await axiosInstance.post("auth/login", data);
       toast({
+        variant: "sucsess",
         description: response.data.message,
       });
-      navigate("/home");
+      setTokens(
+        response.data.data.access_token,
+        response.data.data.refresh_token
+      );
+      navigate("/");
     } catch (error: any) {
       const errorMessage = error.response.data.message;
-      const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) =>
-        toast({
-          variant: "destructive",
-          title: errorMessage,
-          description: description,
-        })
-      );
+      console.log();
+      toast({
+        variant: "destructive",
+        title: errorMessage,
+      });
+      if (error.response.status === 403) {
+        navigate("/verify");
+      }
     } finally {
       setLoadButton(false);
     }
@@ -66,7 +73,9 @@ const Login = () => {
           onSubmit={onSubmit}
           className="flex flex-col justify-center items-center mt-7 w-[450px] gap-6 p-6 rounded-lg bg-white"
         >
-          <h1 className="self-start text-2xl font-semibold mb-7">Masuk</h1>
+          <h1 className="self-start text-2xl font-semibold mb-7 bg-gree">
+            Masuk
+          </h1>
           <Input
             placeholder="Email akun UB"
             type="email"

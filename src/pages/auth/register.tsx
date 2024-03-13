@@ -4,16 +4,18 @@ import Navbar from "../../components/fragments/HeaderAuth";
 import Address from "@/components/fragments/Address";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import { addressUser } from "@/context/AddressContext";
 import { axiosInstance } from "@/lib/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@/context/RegisterContext";
 
 const Register: React.FC = () => {
-  const { user } = useUser();
-  const navigate = useNavigate();
+  const { user } = addressUser();
+  const { setUserID } = useUser();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loadButton, setLoadButton] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
@@ -41,19 +43,32 @@ const Register: React.FC = () => {
       setLoadButton(true);
       const response = await axiosInstance.post("auth/register", data);
       toast({
+        variant: "sucsess",
         description: response.data.message,
       });
-      navigate("/login");
+      setUserID(response.data.data.id);
+      navigate("/verify");
     } catch (error: any) {
-      const errorMessage = error.response.data.message;
-      const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) =>
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errorMessage = error.response.data.message;
+        const errorDescriptions = Object.values(error.response.data.errors);
+        errorDescriptions.map((description) =>
+          toast({
+            variant: "destructive",
+            title: errorMessage,
+            description: description,
+          })
+        );
+      } else if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         toast({
           variant: "destructive",
-          title: errorMessage,
-          description: description,
-        })
-      );
+          title: error.response.data.message,
+        });
+      }
     } finally {
       setLoadButton(false);
     }
@@ -157,7 +172,9 @@ const Register: React.FC = () => {
           )}
           <p className="text-center ">
             Sudah punya akun?{" "}
-            <Link to="/login" className="font-bold hover:underline">Masuk</Link>
+            <Link to="/login" className="font-bold hover:underline">
+              Masuk
+            </Link>
           </p>
         </form>
       </div>

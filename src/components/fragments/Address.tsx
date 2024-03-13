@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { Input } from "../ui/input";
-import { useUser } from "@/context/UserContext";
+import { addressUser } from "@/context/AddressContext";
 
 const Address = () => {
-  const { setUser } = useUser();
+  const { setUser } = addressUser();
   const [address, setAddress] = useState<string>("");
   const [longitude, setLongitude] = useState<number>(0);
   const [latitude, setLatitude] = useState<number>(0);
@@ -37,7 +37,7 @@ const Address = () => {
         if (place.geometry && place.geometry.location) {
           const latitude = place.geometry.location.lat();
           const longitude = place.geometry.location.lng();
-          setAddress(place.formatted_address); // Simpan alamat ke dalam state address
+          setAddress(place.formatted_address);
           setLongitude(longitude);
           setLatitude(latitude);
         }
