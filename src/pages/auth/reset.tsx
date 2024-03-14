@@ -5,10 +5,10 @@ import { useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
+import useLogin from "@/hooks/useLogin";
 
 const Reset = () => {
-  const navigate = useNavigate();
+  useLogin();
   const { toast } = useToast();
   const [loadButton, setLoadButton] = useState(false);
   const [email, setEmail] = useState("");
@@ -23,19 +23,17 @@ const Reset = () => {
       setLoadButton(true);
       const response = await axiosInstance.post("auth/reset", data);
       toast({
+        variant: "sucsess",
         description: response.data.message,
       });
-      navigate("/resetconfirm"); //soon
+      setEmail("");
     } catch (error: any) {
       const errorMessage = error.response.data.message;
-      const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) =>
-        toast({
-          variant: "destructive",
-          title: errorMessage,
-          description: description,
-        })
-      );
+      setEmail("");
+      toast({
+        variant: "destructive",
+        title: errorMessage,
+      });
     } finally {
       setLoadButton(false);
     }

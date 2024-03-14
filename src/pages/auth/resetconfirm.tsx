@@ -1,19 +1,34 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Navbar from "../../components/fragments/HeaderAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { axiosInstance } from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ResetConfirm = () => {
-  const [loadButton, setLoadButton] = useState(false)
+  const { token } = useParams();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [loadButton, setLoadButton] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(`auth/reset/${token}`);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [token]);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -21,24 +36,20 @@ const ResetConfirm = () => {
       password: password,
       confirm_password: confirm,
     };
-    const token = "";
-
     try {
       setLoadButton(true);
-      const response = await axiosInstance.post(`auth/reset/${token}`, data);
+      const response = await axiosInstance.patch(`auth/reset/${token}`, data);
       toast({
+        variant: "sucsess",
         description: response.data.message,
       });
+      navigate("/login")
     } catch (error: any) {
       const errorMessage = error.response.data.message;
-      const errorDescriptions = Object.values(error.response.data.errors);
-      errorDescriptions.map((description) =>
-        toast({
-          variant: "destructive",
-          title: errorMessage,
-          description: description,
-        })
-      );
+      toast({
+        variant: "destructive",
+        title: errorMessage,
+      });
     } finally {
       setLoadButton(false);
     }
@@ -64,10 +75,13 @@ const ResetConfirm = () => {
       <div className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
         <img
           className="w-[450px] max-w-lg pt-16"
-          src="./reset01.png"
+          src="../reset01.png"
           alt="img"
         />
-        <form onSubmit={onSubmit} className="flex flex-col justify-center items-center mt-24 w-[450px] gap-7 p-6 rounded-lg bg-white">
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-col justify-center items-center mt-24 w-[450px] gap-7 p-6 rounded-lg bg-white"
+        >
           <h1 className="self-start text-2xl font-semibold mb-3">
             Reset kata sandi
           </h1>

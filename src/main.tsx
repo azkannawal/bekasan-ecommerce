@@ -38,7 +38,7 @@ const router = createBrowserRouter([
     element: <Reset />,
   },
   {
-    path: "/resetconfirm",
+    path: "/resetconfirm/:token",
     element: <ResetConfirm />,
   },
   {

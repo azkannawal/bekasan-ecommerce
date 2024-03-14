@@ -2,21 +2,25 @@ import Landing from "./../components/fragments/Landing";
 import CardProduct from "../components/fragments/CardProduct";
 import Navbar from "./../components/fragments/Navbar";
 import { useAuth } from "@/context/LoginContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 
 const Home = () => {
+  const [verify, setVerify] = useState(false);
   const { accessToken } = useAuth();
 
   useEffect(() => {
+    if (accessToken) {
+      setVerify(true);
+    }
     const fetchData = async () => {
       const config = {
         headers: {
-          Authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
         },
       };
       try {
-        const response = await axiosInstance.get("/auth/my-data", config);
+        const response = await axiosInstance.get("auth/my-data", config);
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -24,9 +28,8 @@ const Home = () => {
     };
 
     fetchData();
-  }, [accessToken]);
+  }, []);
 
-  const verify = false;
   return (
     <div className="relative">
       {!verify ? <Landing /> : null}

@@ -2,9 +2,18 @@ import { GoSearch } from "react-icons/go";
 import { Input } from "../ui/input";
 import { Link } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
+import { useAuth } from "@/context/LoginContext";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const verify = true;
+  const [verify, setVerify] = useState(false);
+  const { accessToken } = useAuth();
+
+  useEffect(() => {
+    if (accessToken) {
+      setVerify(true);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col w-full z-10 pl-4 pr-10 fixed bg-[#135699]">

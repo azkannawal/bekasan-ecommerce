@@ -7,8 +7,10 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/context/RegisterContext";
+import useLogin from "@/hooks/useLogin";
 
 const Verify = () => {
+  useLogin();
   const { userId } = useUser();
   const { toast } = useToast();
   const navigate = useNavigate();

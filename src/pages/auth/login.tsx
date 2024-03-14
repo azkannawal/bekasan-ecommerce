@@ -8,8 +8,10 @@ import { axiosInstance } from "@/lib/axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/LoginContext";
+import useLogin from "./../../hooks/useLogin";
 
 const Login = () => {
+  useLogin();
   const { setTokens } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const Login = () => {
         response.data.data.access_token,
         response.data.data.refresh_token
       );
+      console.log(response.data);
       navigate("/");
     } catch (error: any) {
       const errorMessage = error.response.data.message;

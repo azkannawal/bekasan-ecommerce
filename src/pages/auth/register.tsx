@@ -10,8 +10,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/RegisterContext";
+import useLogin from "@/hooks/useLogin";
 
 const Register: React.FC = () => {
+  useLogin();
   const { user } = addressUser();
   const { setUserID } = useUser();
   const { toast } = useToast();
