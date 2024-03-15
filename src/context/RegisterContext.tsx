@@ -2,13 +2,15 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface UserContextType {
   userId: string | null;
-  setUserID: (id: string) => void;
+  username: string | null;
+  setUserData: (id: string, username: string) => void;
   clearUser: () => void;
 }
 
 const UserContext = createContext<UserContextType>({
   userId: null,
-  setUserID: () => {},
+  username: null,
+  setUserData: () => {},
   clearUser: () => {},
 });
 
@@ -22,19 +24,26 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [userId, setUserId] = useState<string | null>(
     localStorage.getItem("userId")
   );
+  const [username, setUsername] = useState<string | null>(
+    localStorage.getItem("username")
+  );
 
-  const setUserID = (id: string) => {
-    setUserId(id);
+  const setUserData = (id: string, username: string) => {
     localStorage.setItem("userId", id);
+    localStorage.setItem("username", username);
+    setUserId(id);
+    setUsername(username);
   };
 
   const clearUser = () => {
-    setUserId(null);
     localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    setUserId(null);
+    setUsername(null);
   };
 
   return (
-    <UserContext.Provider value={{ userId, setUserID, clearUser }}>
+    <UserContext.Provider value={{ userId, username, setUserData, clearUser }}>
       {children}
     </UserContext.Provider>
   );

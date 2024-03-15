@@ -26,11 +26,11 @@ const ProfileMenu = () => {
       const response = await axiosInstance.delete(`/auth/logout`, config);
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      navigate("/");
       toast({
         variant: "sucsess",
         description: response.data.message,
       });
-      navigate("/login");
     } catch (error: any) {
       const errorMessage = error.response.data.message;
       toast({
@@ -43,7 +43,7 @@ const ProfileMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <img src="./avatar.png" onClick={() => onSubmit} className="m-2 h-10" />
+        <img src="./avatar.png" className="m-2 h-10" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-10">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

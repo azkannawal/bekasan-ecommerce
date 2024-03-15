@@ -15,7 +15,7 @@ import useLogin from "@/hooks/useLogin";
 const Register: React.FC = () => {
   useLogin();
   const { user } = addressUser();
-  const { setUserID } = useUser();
+  const { setUserData } = useUser();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loadButton, setLoadButton] = useState(false);
@@ -28,19 +28,18 @@ const Register: React.FC = () => {
   const address = user ? user.address : "";
   const longitude = user ? user.longitude : "";
   const latitude = user ? user.latitude : "";
+  const data = {
+    name: name,
+    email: email,
+    password: password,
+    confirm_password: confirm,
+    address: address,
+    latitude: latitude,
+    longitude: longitude,
+  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = {
-      name: name,
-      email: email,
-      password: password,
-      confirm_password: confirm,
-      address: address,
-      latitude: latitude,
-      longitude: longitude,
-    };
-
     try {
       setLoadButton(true);
       const response = await axiosInstance.post("auth/register", data);
@@ -48,7 +47,7 @@ const Register: React.FC = () => {
         variant: "sucsess",
         description: response.data.message,
       });
-      setUserID(response.data.data.id);
+      setUserData(response.data.data.id, "");
       navigate("/verify");
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.errors) {
@@ -93,7 +92,7 @@ const Register: React.FC = () => {
   return (
     <main className="">
       <Navbar title="Daftar" />
-      <div className="flex justify-around items-center relative bg-[#135699] pt-4 px-10 min-h-screen">
+      <div className="flex justify-around items-center relative bg-[#135699] pt-2 px-10 min-h-screen">
         <img
           className="w-[450px] max-w-lg pt-16"
           src="./login01.png"
@@ -154,7 +153,7 @@ const Register: React.FC = () => {
               )}
             </span>
             <Input
-              placeholder="Konfirmasi Kata sandi"
+              placeholder="Konfirmasi kata sandi"
               type={visible2 ? "text" : "password"}
               autoComplete="new-password"
               required
@@ -174,7 +173,7 @@ const Register: React.FC = () => {
           )}
           <p className="text-center ">
             Sudah punya akun?{" "}
-            <Link to="/login" className="font-bold hover:underline">
+            <Link to="/login" className="font-semibold hover:underline">
               Masuk
             </Link>
           </p>

@@ -1,0 +1,67 @@
+import { getDatabase, off, onValue, ref } from "firebase/database";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import app from "./../../lib/firebase";
+import { useUser } from "./../../context/RegisterContext";
+
+interface Seller {
+  uid: string;
+  displayName: string;
+}
+
+const database = getDatabase(app);
+
+const ListSeller: React.FC = () => {
+  const [sellerData, setSellerData] = useState<Seller[]>([]);
+  const { userId } = useUser();
+  const buyer: string = userId ? userId : "";
+
+  useEffect(() => {
+    const fetchData = () => {
+      const sellerRef = ref(database, "seller");
+      onValue(sellerRef, (snapshot) => {
+        const data: Seller[] = [];
+        snapshot.forEach((childSnapshot) => {
+          data.push(childSnapshot.val());
+        });
+        setSellerData(data);
+      });
+    };
+
+    fetchData();
+
+    return () => {
+      const sellerRef = ref(database, "seller");
+      off(sellerRef);
+    };
+  }, []);
+
+  return (
+    <div className="flex flex-col gap-4">
+      {sellerData && sellerData.length > 0 ? (
+        sellerData.map((seller, index) => (
+          <div key={index}>
+            {seller.uid !== buyer ? (
+              <Link to={`buy/${seller.uid}${buyer}`}>
+                <div className="rounded-lg p-4 bg-cyan-500 flex items-center gap-4 ">
+                  <img
+                    src="./avatar.png"
+                    alt={seller.displayName}
+                    className="rounded-full w-20 h-20"
+                  />
+                  <p>{seller.displayName}</p>
+                </div>
+              </Link>
+            ) : sellerData.length < 2 ? (
+              <h1 className="text-lg">Anda belum pernah chat penjual</h1>
+            ) : null}
+          </div>
+        ))
+      ) : (
+        <h1 className="text-lg">Anda belum pernah chat penjual</h1>
+      )}
+    </div>
+  );
+};
+
+export default ListSeller;

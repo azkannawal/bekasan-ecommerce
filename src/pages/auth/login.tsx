@@ -120,13 +120,13 @@ const Login = () => {
           <div className="flex flex-col gap-2 text-center ">
             <p>
               Lupa kata sandi?{" "}
-              <Link to="/reset" className="font-bold hover:underline">
+              <Link to="/reset" className="font-semibold hover:underline">
                 Reset kata sandi
               </Link>
             </p>
             <p>
               Belum punya akun?{" "}
-              <Link to="/register" className="font-bold hover:underline">
+              <Link to="/register" className="font-semibold hover:underline">
                 Daftar
               </Link>
             </p>

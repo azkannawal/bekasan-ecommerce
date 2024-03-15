@@ -56,7 +56,7 @@ const Reset = () => {
             Reset kata sandi
           </h1>
           <Input
-            placeholder="Email"
+            placeholder="Email akun UB terdaftar"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

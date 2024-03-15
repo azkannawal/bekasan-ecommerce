@@ -9,7 +9,7 @@ const useLogin = () => {
   useEffect(() => {
     if (accessToken) {
       navigate("/");
-    }
+    } else null
   }, []);
 
   return accessToken;
