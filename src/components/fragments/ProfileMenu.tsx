@@ -43,7 +43,7 @@ const ProfileMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <img src="./avatar.png" className="m-2 h-10" />
+        <img src="/public/avatar.png" className="m-2 h-10" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-10">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
