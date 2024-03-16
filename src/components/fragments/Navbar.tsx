@@ -1,6 +1,5 @@
 import { GoSearch } from "react-icons/go";
 import { Link } from "react-router-dom";
-import ProfileMenu from "./ProfileMenu";
 import { useAuth } from "@/context/LoginContext";
 import { useEffect, useState } from "react";
 import SearchField from "./SearchField";
@@ -52,7 +51,7 @@ const Navbar = () => {
               <img src="/public/chat.png" className="m-2 h-6" />
             </Link>
             <img src="/public/notif.png" className="m-2 h-6" />
-            <ProfileMenu />
+            <img src="/public/avatar.png" className="m-2 h-10" />
           </>
         ) : (
           <img src="/public/logo.png" className="m-2 w-12 h-12 rounded-full" />

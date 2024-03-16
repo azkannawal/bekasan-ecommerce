@@ -19,6 +19,7 @@ import ChatToSeller from "./pages/chatseller.tsx";
 import ChatToBuyer from "./pages/chatbuyer.tsx";
 import DetailProduct from "./pages/detailproduct.tsx";
 import { ProductDataProvider } from "./context/SearchContext.tsx";
+import Profile from "./pages/profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: "/product/:id",
     element: <DetailProduct />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 
