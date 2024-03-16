@@ -127,7 +127,7 @@ const Search = () => {
             <h1 className="text-2xl font-bold text-white px-2">Sort</h1>
             <Button
               onClick={() => {
-                toggleDropdown(2), handleSearch("", "distance");
+                toggleDropdown(2), handleSearch("", "price");
               }}
               variant="ghost"
               className="justify-between px-2 text-white"
@@ -143,7 +143,7 @@ const Search = () => {
             </Button>
             <Button
               onClick={() => {
-                toggleDropdown(3), handleSearch("", "price");
+                toggleDropdown(3), handleSearch("", "distance");
               }}
               variant="ghost"
               className="justify-between px-2 text-white"

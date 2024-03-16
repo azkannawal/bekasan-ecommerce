@@ -28,8 +28,32 @@ const Category: React.FC<Props> = ({ style }) => {
           "ngrok-skip-browser-warning": true,
         },
         params: {
-          query: "",
           category: category,
+          sort: "default",
+          page: 1,
+        },
+      });
+      setProductData(response.data.data.products);
+    } catch (error: any) {
+      if (
+        error.response.status === 401 &&
+        error.response.data.is_expired === true
+      ) {
+        getNewToken(refreshToken, setTokens);
+      } else {
+        console.log(error.response);
+      }
+    }
+  };
+
+  const chooseCategory = async () => {
+    try {
+      const response = await axiosInstance.get(`/product/search`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "ngrok-skip-browser-warning": true,
+        },
+        params: {
           sort: "default",
           page: 1,
         },
@@ -64,6 +88,9 @@ const Category: React.FC<Props> = ({ style }) => {
 
   useEffect(() => {
     getCategoryProduct();
+    if (accessToken) {
+      chooseCategory();
+    }
   }, []);
 
   return (
@@ -78,9 +105,7 @@ const Category: React.FC<Props> = ({ style }) => {
           <Link
             key={item.id}
             onClick={() => {
-              setTimeout(() => {
-                handleSearch(item.name);
-              }, 800);
+              handleSearch(item.name);
             }}
             to={"/search"}
           >
