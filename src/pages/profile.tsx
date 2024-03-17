@@ -33,11 +33,11 @@ const Profile = () => {
       });
     }
   };
-  
+
   return (
     <div className="flex flex-col gap-4 justify-center items-center min-h-screen bg-[#135699]">
       <Link to="/login">
-        <Button onClick={handleLogout}>Profile</Button>
+        <Button onClick={handleLogout}>Keluar</Button>
       </Link>
     </div>
   );

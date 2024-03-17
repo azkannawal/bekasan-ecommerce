@@ -45,7 +45,7 @@ const Reset = () => {
       <div className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
         <img
           className="w-[450px] max-w-lg pt-16"
-          src="/src/assets/reset01.png"
+          src="./reset01.png"
           alt="img"
         />
         <form
