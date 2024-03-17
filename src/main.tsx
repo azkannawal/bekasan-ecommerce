@@ -56,11 +56,11 @@ const router = createBrowserRouter([
     element: <Chat />,
   },
   {
-    path: "/chat/buy/:id",
+    path: "/chat/toseller/:id",
     element: <ChatToSeller />,
   },
   {
-    path: "/chat/sell/:id",
+    path: "/chat/tobuyer/:id",
     element: <ChatToBuyer />,
   },
   {

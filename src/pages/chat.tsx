@@ -4,13 +4,14 @@ import ListSeller from "@/components/fragments/ListSeller";
 import { useUser } from "@/context/RegisterContext";
 import { get, getDatabase, push, ref } from "firebase/database";
 import app from "@/lib/firebase";
-
 const database = getDatabase(app);
 
 const Chat = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [indicatorPosition, setIndicatorPosition] = useState(0);
-  const { userId, username } = useUser();
+  const { userId } = useUser();
+  const sellerid = "123abc";
+  const sellername = "Azkan";
 
   const handleTabChange = (tabNumber: number) => {
     setActiveTab(tabNumber);
@@ -20,8 +21,8 @@ const Chat = () => {
   const sendData = async () => {
     if (userId) {
       const userData = {
-        uid: userId,
-        displayName: username,
+        uid: sellerid, //owner_id
+        displayName: sellername, //owner_name
       };
 
       const sellerRef = ref(database, `seller/${userId}`);
@@ -36,7 +37,7 @@ const Chat = () => {
       });
 
       if (!dataExists) {
-        push(ref(database, "seller"), userData);
+        push(ref(database, `seller/${userId}`), userData);
       } else {
         console.log("Data with the same UID already exists");
       }
@@ -54,7 +55,7 @@ const Chat = () => {
           } focus:outline-none border-r border-gray-300`}
           onClick={() => handleTabChange(1)}
         >
-          Pesan Penjual
+          Chat ke penjual
         </button>
         <button
           className={`flex-1 px-4 py-2 ${
@@ -67,7 +68,7 @@ const Chat = () => {
             sendData();
           }}
         >
-          Pesan Pembeli
+          Chat dari pembeli
         </button>
         <div
           className="absolute bottom-0 left-0 bg-blue-500 h-1 transition-transform duration-300"
@@ -78,12 +79,11 @@ const Chat = () => {
         />
       </div>
       <div className="mt-4">
-        {activeTab === 1 && (
+        {activeTab === 1 ? (
           <div className="bg-blue-100 p-4 rounded-lg">
             <ListSeller />
           </div>
-        )}
-        {activeTab === 2 && (
+        ) : (
           <div className="bg-blue-100 p-4 rounded-lg">
             <ListBuyer />
           </div>

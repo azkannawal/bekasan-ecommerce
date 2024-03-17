@@ -36,7 +36,7 @@ const ListBuyer: React.FC = () => {
     <div className="flex flex-col gap-4">
       {buyerData && buyerData.length > 0 ? (
         buyerData.map((buyer, index) => (
-          <Link key={index} to={`sell/${seller}${buyer.uid}`}>
+          <Link key={index} to={`tobuyer/${seller}${buyer.uid}`}>
             <div className="relative rounded-lg p-4 bg-cyan-500 flex items-center gap-4 ">
               <NotificationIcon
                 datapath={`chats/${seller}${buyer.uid}`}

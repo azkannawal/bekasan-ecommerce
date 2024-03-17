@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import app from "./../../lib/firebase";
 import { useUser } from "./../../context/RegisterContext";
+const database = getDatabase(app);
 
 interface Seller {
   uid: string;
   displayName: string;
 }
-
-const database = getDatabase(app);
 
 const ListSeller: React.FC = () => {
   const [sellerData, setSellerData] = useState<Seller[]>([]);
@@ -18,7 +17,7 @@ const ListSeller: React.FC = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      const sellerRef = ref(database, "seller");
+      const sellerRef = ref(database, `seller/${buyer}`);
       onValue(sellerRef, (snapshot) => {
         const data: Seller[] = [];
         snapshot.forEach((childSnapshot) => {
@@ -31,7 +30,7 @@ const ListSeller: React.FC = () => {
     fetchData();
 
     return () => {
-      const sellerRef = ref(database, "seller");
+      const sellerRef = ref(database, `seller/${buyer}`);
       off(sellerRef);
     };
   }, []);
@@ -42,7 +41,7 @@ const ListSeller: React.FC = () => {
         sellerData.map((seller, index) => (
           <div key={index}>
             {seller.uid !== buyer ? (
-              <Link to={`buy/${seller.uid}${buyer}`}>
+              <Link to={`toseller/${seller.uid}${buyer}`}>
                 <div className="rounded-lg p-4 bg-cyan-500 flex items-center gap-4 ">
                   <img
                     src="./avatar.png"
