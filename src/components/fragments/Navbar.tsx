@@ -37,7 +37,11 @@ const Navbar = () => {
       ) : null}
       <div className="flex items-center gap-x-4 w-full">
         <Link to="/" className="w-auto">
-          <img className="h-[80px]" src="https://i.ibb.co/jTZBvN3/logo2.png" alt="img" />
+          <img
+            className="h-[80px]"
+            src="https://i.ibb.co/jTZBvN3/logo2.png"
+            alt="img"
+          />
         </Link>
         <div className="relative w-full">
           <span className="absolute cursor-pointer py-4 bottom-0 right-0 pr-4">
@@ -48,13 +52,22 @@ const Navbar = () => {
         {verify ? (
           <>
             <Link to="/chat">
-              <img src="https://i.ibb.co/ZzSy4XM/chat.png" className="m-2 h-6" />
+              <img
+                src="https://i.ibb.co/ZzSy4XM/chat.png"
+                className="m-2 h-6"
+              />
             </Link>
             <img src="https://i.ibb.co/QjMm0fp/notif.png" className="m-2 h-6" />
-            <img src="https://i.ibb.co/ctyg3bB/avatar.png" className="m-2 h-10" />
+            <img
+              src="https://i.ibb.co/ctyg3bB/avatar.png"
+              className="m-2 h-10"
+            />
           </>
         ) : (
-          <img src="https://i.ibb.co/6wW3rrf/send.png" className="m-2 w-12 h-12 rounded-full" />
+          <img
+            src="https://i.ibb.co/t87W7vK/logo.png"
+            className="m-2 w-12 h-12 rounded-full"
+          />
         )}
       </div>
     </div>
