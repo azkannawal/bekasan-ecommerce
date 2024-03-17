@@ -44,7 +44,7 @@ const ListBuyer: React.FC = () => {
               />
               <img
                 className="w-20 h-20 object-cover rounded-full"
-                src="./avatar.png"
+                src="/src/assets/avatar.png"
                 alt={buyer.displayName}
               />{" "}
               <p>{buyer.displayName}</p>

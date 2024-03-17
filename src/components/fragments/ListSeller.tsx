@@ -45,7 +45,7 @@ const ListSeller: React.FC = () => {
               <Link to={`buy/${seller.uid}${buyer}`}>
                 <div className="rounded-lg p-4 bg-cyan-500 flex items-center gap-4 ">
                   <img
-                    src="./avatar.png"
+                    src="/src/assets/avatar.png"
                     alt={seller.displayName}
                     className="rounded-full w-20 h-20"
                   />

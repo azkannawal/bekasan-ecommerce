@@ -20,7 +20,7 @@ const Category: React.FC<Props> = ({ style }) => {
   const { setProductData } = useProductData();
   const { accessToken, refreshToken, setTokens } = useAuth();
 
-  const handleSearch = async (category: any) => {
+  const chooseCategory = async (category: any) => {
     try {
       const response = await axiosInstance.get(`/product/search`, {
         headers: {
@@ -46,7 +46,7 @@ const Category: React.FC<Props> = ({ style }) => {
     }
   };
 
-  const chooseCategory = async () => {
+  const defaultCategory = async () => {
     try {
       const response = await axiosInstance.get(`/product/search`, {
         headers: {
@@ -89,7 +89,7 @@ const Category: React.FC<Props> = ({ style }) => {
   useEffect(() => {
     getCategoryProduct();
     if (accessToken) {
-      chooseCategory();
+      defaultCategory();
     }
   }, []);
 
@@ -105,7 +105,7 @@ const Category: React.FC<Props> = ({ style }) => {
           <Link
             key={item.id}
             onClick={() => {
-              handleSearch(item.name);
+              chooseCategory(item.name);
             }}
             to={"/search"}
           >

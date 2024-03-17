@@ -71,7 +71,7 @@ const Login = () => {
         <Navbar title="Masuk" />
       </Link>
       <div className="flex justify-around items-center min-h-screen relative bg-[#135699] pt-8 px-10">
-        <img className="w-[450px] max-w-lg" src="./login01.png" alt="img" />
+        <img className="w-[450px] max-w-lg" src="/src/assets/login01.png" alt="img" />
         <form
           onSubmit={onSubmit}
           className="flex flex-col justify-center items-center mt-7 w-[450px] gap-6 p-6 rounded-lg bg-white"

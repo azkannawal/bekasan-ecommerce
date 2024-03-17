@@ -52,7 +52,7 @@ const Landing = () => {
                     <CardContent className="flex flex-col items-center justify-center gap-3">
                       <img
                         className="h-96"
-                        src={`./landingpage0${index + 1}.png`}
+                        src={`/src/assets/landingpage0${index + 1}.png`}
                         alt="img"
                       />
                       {index < 3 ? (
