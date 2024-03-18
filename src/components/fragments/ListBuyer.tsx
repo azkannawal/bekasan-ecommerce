@@ -37,13 +37,13 @@ const ListBuyer: React.FC = () => {
       {buyerData && buyerData.length > 0 ? (
         buyerData.map((buyer, index) => (
           <Link key={index} to={`tobuyer/${seller}${buyer.uid}`}>
-            <div className="relative rounded-lg p-4 bg-cyan-500 flex items-center gap-4 ">
+            <div className="flex items-center gap-4">
               <NotificationIcon
                 datapath={`chats/${seller}${buyer.uid}`}
                 read="sellerRead"
               />
               <img
-                className="w-20 h-20 object-cover rounded-full"
+                className="w-20 h-20 rounded-full"
                 src="./avatar.png"
                 alt={buyer.displayName}
               />{" "}
@@ -52,7 +52,7 @@ const ListBuyer: React.FC = () => {
           </Link>
         ))
       ) : (
-        <h1 className="text-lg">Belum ada chat dari pembeli</h1>
+        <h1 className="text-lg p-5">Belum ada chat dari pembeli</h1>
       )}
     </div>
   );

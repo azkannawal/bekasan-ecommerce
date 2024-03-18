@@ -40,24 +40,20 @@ const ListSeller: React.FC = () => {
       {sellerData && sellerData.length > 0 ? (
         sellerData.map((seller, index) => (
           <div key={index}>
-            {seller.uid !== buyer ? (
-              <Link to={`toseller/${seller.uid}${buyer}`}>
-                <div className="rounded-lg p-4 bg-cyan-500 flex items-center gap-4 ">
-                  <img
-                    src="./avatar.png"
-                    alt={seller.displayName}
-                    className="rounded-full w-20 h-20"
-                  />
-                  <p>{seller.displayName}</p>
-                </div>
-              </Link>
-            ) : sellerData.length < 2 ? (
-              <h1 className="text-lg">Anda belum pernah chat penjual</h1>
-            ) : null}
+            <Link to={`toseller/${seller.uid}${buyer}`}>
+              <div className="flex items-center gap-4">
+                <img
+                  src="./avatar.png"
+                  alt={seller.displayName}
+                  className="rounded-full w-20 h-20"
+                />
+                <p>{seller.displayName}</p>
+              </div>
+            </Link>
           </div>
         ))
       ) : (
-        <h1 className="text-lg">Anda belum pernah chat penjual</h1>
+        <h1 className="text-lg p-5">Anda belum pernah chat penjual</h1>
       )}
     </div>
   );
