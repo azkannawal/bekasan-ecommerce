@@ -45,15 +45,25 @@ const SearchProduct = () => {
       {productData
         ? productData!.map((item) => (
             <Link to={`/product/${item.product_id}`} key={item.product_id}>
-              <div className="flex flex-col gap-y-2 max-w-96">
-                <img src={item.url_photo_product} alt="img" className="pb-1" />
-                <h1 className="text-xl font-bold">{item.product_name}</h1>
-                <h2 className="font-medium text-[#135699]">
-                  Rp {item.product_price}
-                </h2>
-                <div className="flex justify-between">
-                  <h3>{item.owner_name}</h3>
-                  <h3>{parseFloat(item.owner_distance).toFixed(1)} KM</h3>
+              <div className="flex flex-col h-full w-full max-w-80 items-center rounded-lg shadow-zinc-300 shadow">
+                <img
+                  src={item.url_photo_product}
+                  alt="img"
+                  className="w-full h-full max-h-80 object-contain rounded-t-lg"
+                />
+                <div className="flex flex-col gap-1 pt-3 pb-4 w-full">
+                  <h1 className="w-full px-3 text-lg font-medium text-[#0F172A]">
+                    {item.product_name.length > 50
+                      ? item.product_name.slice(0, 50) + "..."
+                      : item.product_name}
+                  </h1>
+                  <h2 className="w-full px-3 font-medium text-[#135699]">
+                    Rp {item.product_price.toLocaleString("id-ID")}
+                  </h2>
+                  <div className="w-full flex justify-between px-3 text-sm text-[#0F172A]">
+                    <h3>{item.owner_name}</h3>
+                    <h3> {(item.owner_distance / 1000).toFixed(2)} KM</h3>
+                  </div>
                 </div>
               </div>
             </Link>

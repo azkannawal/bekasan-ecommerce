@@ -3,9 +3,9 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 interface ProductData {
   product_id: string;
   product_name: string;
-  product_price: string;
+  product_price: number;
   owner_name: string;
-  owner_distance: string;
+  owner_distance: number;
   url_photo_product: string;
 }
 
