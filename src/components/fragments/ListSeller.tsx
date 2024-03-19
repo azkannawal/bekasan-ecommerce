@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import app from "./../../lib/firebase";
 import { useUser } from "./../../context/RegisterContext";
+import NotificationIcon from "./ChatNotif";
 const database = getDatabase(app);
 
 interface Seller {
@@ -36,12 +37,16 @@ const ListSeller: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 relative">
       {sellerData && sellerData.length > 0 ? (
         sellerData.map((seller, index) => (
           <div key={index}>
             <Link to={`toseller/${seller.uid}${buyer}`}>
               <div className="flex items-center gap-4">
+                <NotificationIcon
+                  datapath={`chats/${seller.uid}${buyer}`}
+                  read="buyerRead"
+                />
                 <img
                   src="./avatar.png"
                   alt={seller.displayName}

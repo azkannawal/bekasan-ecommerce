@@ -33,7 +33,7 @@ const ListBuyer: React.FC = () => {
   }, [seller]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 relative">
       {buyerData && buyerData.length > 0 ? (
         buyerData.map((buyer, index) => (
           <Link key={index} to={`tobuyer/${seller}${buyer.uid}`}>

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, onValue, off } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  off,
+} from "firebase/database";
 import app from "./../../lib/firebase";
 
 const database = getDatabase(app);
@@ -21,12 +26,12 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
       const data = snapshot.val() || [];
       if (read === "buyerRead") {
         const unread = Object.values(data).filter(
-          (item: any) => !item.buyerRead
+          (item: any) => item.buyerRead === false
         );
         setCount(unread.length);
       } else {
         const unread = Object.values(data).filter(
-          (item: any) => !item.sellerRead
+          (item: any) => item.sellerRead === false
         );
         setCount(unread.length);
       }
@@ -34,7 +39,6 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({
     onValue(path, handleNotificationChange);
     return () => {
       off(path);
-      // off(path, handleNotificationChange);
     };
   }, []);
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getDatabase, ref, push, onValue } from "firebase/database";
+import { getDatabase, ref, push, onValue, update, DataSnapshot, get } from "firebase/database";
 import { useParams } from "react-router-dom";
 import app from "./../lib/firebase";
 import { useUser } from "./../context/RegisterContext";
@@ -19,8 +19,35 @@ const ChatToBuyer = () => {
   const [inputChat, setInputChat] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const seller: string = userId ? userId : "";
+  const buyer = id ? id.substring(seller.length) : "";
+  console.log(buyer)
+
+  const handleRead = () => {
+    const path = ref(database,`chats/${seller}${buyer}`);
+    get(path)
+      .then((snapshot: DataSnapshot) => {
+        const chatData = snapshot.val();
+        for (const chatId in chatData) {
+          if (chatData.hasOwnProperty(chatId)) {
+            const chatEntry = chatData[chatId];
+            if (
+              chatEntry.hasOwnProperty("sellerRead") &&
+              chatEntry.sellerRead === false
+            ) {
+              update(ref(database, `chats/${seller}${buyer}/${chatId}`), {
+                sellerRead: true,
+              });
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error retrieving data:", error);
+      });
+  };
 
   useEffect(() => {
+    handleRead()
     const path = ref(database, `chats/${id}`);
     onValue(path, (snapshot) => {
       const data = snapshot.val();
@@ -36,7 +63,7 @@ const ChatToBuyer = () => {
         setMessages([]);
       }
     });
-  }, []);
+  }, [messages]);
 
   const sendMessage = () => {
     if (inputChat.trim() !== "") {
