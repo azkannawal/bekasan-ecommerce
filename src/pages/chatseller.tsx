@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useUser } from "./../context/RegisterContext";
-import { getDatabase, ref, push, onValue, get, DataSnapshot, update } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  get,
+  DataSnapshot,
+  update,
+} from "firebase/database";
 import app from "./../lib/firebase";
 const database = getDatabase(app);
 
@@ -24,7 +32,7 @@ const ChatToSeller = () => {
   const sellername = "namazaza";
 
   const handleRead = () => {
-    const path = ref(database,`chats/${seller}${buyer}`);
+    const path = ref(database, `chats/${seller}${buyer}`);
     get(path)
       .then((snapshot: DataSnapshot) => {
         const chatData = snapshot.val();
@@ -48,7 +56,7 @@ const ChatToSeller = () => {
   };
 
   useEffect(() => {
-    handleRead()
+    handleRead();
     const path = ref(database, `chats/${id}`);
     onValue(path, (snapshot) => {
       const data = snapshot.val();
@@ -77,7 +85,7 @@ const ChatToSeller = () => {
       } = {
         sender: buyer,
         content: inputChat,
-        hours: `${currentTime.getHours()}:${currentTime.getMinutes()}`,
+        hours: `${currentTime.getHours()}:${(currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes()}`,
         sellerRead: false,
       };
       push(ref(database, `chats/${id}`), message);

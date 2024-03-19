@@ -71,7 +71,7 @@ const ChatToBuyer = () => {
       const message: Message = {
         sender: seller,
         content: inputChat,
-        hours: `${currentTime.getHours()}:${currentTime.getMinutes()}`,
+        hours: `${currentTime.getHours()}:${(currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes()}`,
         buyerRead: false,
       };
       push(ref(database, `chats/${id}`), message);
