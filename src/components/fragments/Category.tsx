@@ -78,8 +78,7 @@ const Category: React.FC<Props> = ({ style }) => {
       },
     };
     try {
-      const response = await axiosInstance.get("product/", config);
-      console.log(response.data.data);
+      const response = await axiosInstance.get("/product/homepage", config);
       setCategory(response.data.data);
     } catch (error) {
       console.log(error);
@@ -95,12 +94,12 @@ const Category: React.FC<Props> = ({ style }) => {
 
   return (
     <main
-      className={`${style} flex flex-col justify-center items-center relative z-1 pb-12`}
+      className={`${style} flex flex-col justify-center items-center relative z-1 pb-20`}
     >
-      <h1 className="self-start pt-8 pb-8 px-12 font-bold text-[28px] text-[#0F172A]">
+      <h1 className="self-start pt-8 pb-8 px-10 font-bold text-[28px] text-[#0F172A]">
         Kategori
       </h1>
-      <div className="grid grid-cols-4 gap-x-32 gap-y-14 ">
+      <div className="grid grid-cols-4 gap-x-24 gap-y-14 px-12">
         {category.map((item) => (
           <Link
             key={item.id}
@@ -109,13 +108,13 @@ const Category: React.FC<Props> = ({ style }) => {
             }}
             to={"/search"}
           >
-            <div className="flex flex-col text-center gap-2">
+            <div className="flex flex-col h-full justify-center items-center gap-2 rounded-lg shadow-zinc-300 shadow">
               <img
-                className="w-60 rounded-lg"
+                className="w-full h-full max-w-60 max-h-60 object-contain rounded-lg p-2"
                 src={item.url_category}
                 alt={`img`}
               />
-              <p className="text-lg font-semibold text-[#0F172A]">
+              <p className="text-center text-lg font-medium p-3 text-[#0F172A]">
                 {item.name}
               </p>
             </div>

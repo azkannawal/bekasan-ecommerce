@@ -57,11 +57,18 @@ const Navbar = () => {
                 className="m-2 h-6"
               />
             </Link>
-            <img src="https://i.ibb.co/QjMm0fp/notif.png" className="m-2 h-6" />
-            <img
-              src="https://i.ibb.co/ctyg3bB/avatar.png"
-              className="m-2 h-10"
-            />
+            <Link to="/transaction">
+              <img
+                src="https://i.ibb.co/QjMm0fp/notif.png"
+                className="m-2 h-6"
+              />
+            </Link>
+            <Link to="/profile">
+              <img
+                src="https://i.ibb.co/ctyg3bB/avatar.png"
+                className="m-2 h-10"
+              />
+            </Link>
           </>
         ) : (
           <img

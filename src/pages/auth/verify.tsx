@@ -26,7 +26,7 @@ const Verify = () => {
 
     try {
       setLoadButton(true);
-      const response = await axiosInstance.patch("auth/register/verify", data);
+      const response = await axiosInstance.patch("auth/register", data);
       toast({
         variant: "sucsess",
         description: response.data.message,
