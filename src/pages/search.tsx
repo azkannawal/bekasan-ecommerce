@@ -6,7 +6,7 @@ import { useProductData } from "@/context/SearchContext";
 import { useAuth } from "@/context/LoginContext";
 import { Button } from "@/components/ui/button";
 import { FaSortAmountDown } from "react-icons/fa";
-import CategoryDropdown from './../components/fragments/CategoryDropdown';
+import CategoryDropdown from "./../components/fragments/CategoryDropdown";
 import AddNavbar from "@/components/layouts/AddNavbar";
 
 const Search: React.FC = () => {
@@ -14,7 +14,10 @@ const Search: React.FC = () => {
   const { setProductData } = useProductData();
   const { accessToken, refreshToken, setTokens } = useAuth();
 
-  const handleSearch = async (category: string, sort: string): Promise<void> => {
+  const handleSearch = async (
+    category: string,
+    sort: string
+  ): Promise<void> => {
     try {
       const response = await axiosInstance.get(`/product/search`, {
         headers: {
@@ -41,16 +44,24 @@ const Search: React.FC = () => {
   return (
     <AddNavbar>
       <main className="flex">
-        <div className="w-1/5 relative bg-[#135699] ">
+        <div className="w-1/5 relative min-h-screen bg-[#135699]">
           <div className="flex flex-col fixed gap-4 pt-24 p-8 w-1/5">
             <h1 className="text-2xl font-bold text-white px-2">Filter</h1>
             <CategoryDropdown handleSearch={handleSearch} />
             <h1 className="text-2xl font-bold text-white pt-6 px-2">Sort</h1>
-            <Button onClick={() => handleSearch("", "price")} variant="ghost" className="justify-between px-2 text-white">
+            <Button
+              onClick={() => handleSearch("", "price")}
+              variant="ghost"
+              className="justify-between px-2 text-white"
+            >
               Harga
               <FaSortAmountDown className="mr-2 h-4 w-4" />
             </Button>
-            <Button onClick={() => handleSearch("", "distance")} variant="ghost" className="justify-between px-2 text-white">
+            <Button
+              onClick={() => handleSearch("", "distance")}
+              variant="ghost"
+              className="justify-between px-2 text-white"
+            >
               Jarak
               <FaSortAmountDown className="mr-2 h-4 w-4" />
             </Button>

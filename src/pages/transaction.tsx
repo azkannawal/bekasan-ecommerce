@@ -12,14 +12,14 @@ const Transaction = () => {
   };
 
   return (
-    <main>
+    <main className="relative">
       <div className="flex relative mb-4 overflow-hidden">
         <button
           className={`flex-1 px-4 py-6 font-semibold ${
             activeTab === 1
               ? "bg-[#135699] text-white"
               : "bg-blue-100 text-slate-900"
-          } focus:outline-none border-r border-gray-300`}
+          } focus:outline-none`}
           onClick={() => handleTabChange(1)}
         >
           Pembelian
@@ -44,12 +44,8 @@ const Transaction = () => {
           }}
         />
       </div>
-      <div className="px-16">
-        {activeTab === 1 ? (
-          <BuyTransaction/>
-        ) : (
-          <SellTransaction />
-        )}
+      <div className="px-16 relative">
+        {activeTab === 1 ? <BuyTransaction /> : <SellTransaction />}
       </div>
     </main>
   );

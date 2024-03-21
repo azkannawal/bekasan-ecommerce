@@ -62,7 +62,11 @@ const SearchProduct = () => {
                   </h2>
                   <div className="w-full flex justify-between px-3 text-sm text-[#0F172A]">
                     <h3>{item.owner_name}</h3>
-                    <h3> {(item.owner_distance / 1000).toFixed(2)} KM</h3>
+                    <h3>
+                      {item.owner_distance < 1000
+                        ? (item.owner_distance / 1).toFixed(0) + " M"
+                        : (item.owner_distance / 1000).toFixed(2) + " KM"}
+                    </h3>
                   </div>
                 </div>
               </div>
