@@ -43,7 +43,7 @@ const ResetConfirm = () => {
         variant: "sucsess",
         description: response.data.message,
       });
-      navigate("/login")
+      navigate("/login");
     } catch (error: any) {
       const errorMessage = error.response.data.message;
       toast({
@@ -75,7 +75,7 @@ const ResetConfirm = () => {
       <div className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
         <img
           className="w-[450px] max-w-lg pt-16"
-          src="./reset01.png"
+          src="https://i.ibb.co/S32Zj7J/reset01.png"
           alt="img"
         />
         <form
