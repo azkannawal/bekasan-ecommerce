@@ -1,12 +1,12 @@
 import { useAuth } from "@/context/LoginContext";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
-import Navbar from "./../components/fragments/Navbar";
 import Landing from "./../components/fragments/Landing";
 import Category from "./../components/fragments/Category";
 import { useUser } from "@/context/RegisterContext";
 import { getNewToken } from "@/hooks/useToken";
 import { useNavigate } from "react-router-dom";
+import AddNavbar from "@/components/layouts/AddNavbar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -55,13 +55,12 @@ const Home = () => {
   }, [accessToken]);
 
   return (
-    <div className="relative">
+    <AddNavbar>
       {verify ? null : <Landing />}
-      <Navbar />
-      <div className="relative">
+      <main className="relative">
         <Category style={`w-full ${space}`} />
-      </div>
-    </div>
+      </main>
+    </AddNavbar>
   );
 };
 

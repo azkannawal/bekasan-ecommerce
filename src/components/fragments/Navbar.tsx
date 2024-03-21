@@ -17,7 +17,7 @@ const Navbar = () => {
   }, [accessToken]);
 
   return (
-    <div className="flex flex-col w-full z-10 pl-5 pr-10 fixed bg-[#135699]">
+    <nav className="flex flex-col w-full z-10 pl-5 pr-10 fixed bg-[#135699]">
       {!verify ? (
         <div className="flex justify-end items-center gap-6 pt-2 px-2 w-full text-sm text-white">
           <Link
@@ -77,7 +77,7 @@ const Navbar = () => {
           />
         )}
       </div>
-    </div>
+    </nav>
   );
 };
 

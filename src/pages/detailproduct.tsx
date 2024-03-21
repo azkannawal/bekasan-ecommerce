@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
-import Navbar from "@/components/fragments/Navbar";
 import BuyProduct from "./../components/fragments/BuyProduct";
+import AddNavbar from "@/components/layouts/AddNavbar";
 
 const DetailProduct = () => {
   const { id } = useParams();
@@ -31,7 +31,6 @@ const DetailProduct = () => {
         },
       });
       setData(response.data.data);
-      console.log(response.data.data);
     } catch (error: any) {
       if (
         error.response.status === 401 &&
@@ -49,9 +48,8 @@ const DetailProduct = () => {
   }, [id]);
 
   return (
-    <main>
-      <Navbar />
-      <div className="flex pt-28 px-6 w-full gap-x-4">
+    <AddNavbar>
+      <main className="flex pt-28 px-6 w-full gap-x-4">
         <div className="flex flex-col gap-y-2 px-8 w-2/6 ">
           <img
             src={data.media[selectedImage]}
@@ -107,8 +105,8 @@ const DetailProduct = () => {
           </div>
         </div>
         {id ? <BuyProduct id={id} /> : null}
-      </div>
-    </main>
+      </main>
+    </AddNavbar>
   );
 };
 

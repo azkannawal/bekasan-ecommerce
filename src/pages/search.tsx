@@ -1,4 +1,3 @@
-import Navbar from "./../components/fragments/Navbar";
 import SearchProduct from "./../components/fragments/SearchProduct";
 import useNot from "@/hooks/useNot";
 import { axiosInstance } from "@/lib/axios";
@@ -8,6 +7,7 @@ import { useAuth } from "@/context/LoginContext";
 import { Button } from "@/components/ui/button";
 import { FaSortAmountDown } from "react-icons/fa";
 import CategoryDropdown from './../components/fragments/CategoryDropdown';
+import AddNavbar from "@/components/layouts/AddNavbar";
 
 const Search: React.FC = () => {
   useNot();
@@ -39,9 +39,8 @@ const Search: React.FC = () => {
   };
 
   return (
-    <main>
-      <Navbar />
-      <div className="flex">
+    <AddNavbar>
+      <main className="flex">
         <div className="w-1/5 relative bg-[#135699] ">
           <div className="flex flex-col fixed gap-4 pt-24 p-8 w-1/5">
             <h1 className="text-2xl font-bold text-white px-2">Filter</h1>
@@ -60,8 +59,8 @@ const Search: React.FC = () => {
         <div className="w-4/5">
           <SearchProduct />
         </div>
-      </div>
-    </main>
+      </main>
+    </AddNavbar>
   );
 };
 
