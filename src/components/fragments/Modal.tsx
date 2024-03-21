@@ -6,7 +6,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/LoginContext";
 import { axiosInstance } from "@/lib/axios";
 import { getNewToken } from "@/hooks/useToken";
-import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
   option: number;
@@ -35,7 +34,6 @@ const Modal = ({
 }: ModalProps) => {
   const { accessToken, refreshToken, setTokens } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
   const match: boolean = input === id;
   const chooseFunction = { option };
   const config = {
