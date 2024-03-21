@@ -1,5 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 import {
   Carousel,
   CarouselContent,
@@ -7,12 +10,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
 
 const Landing = () => {
   const [hide, setHide] = useState(true);
+  const img = [
+    "landingpage01.png",
+    "landingpage02.png",
+    "landingpage03.png",
+    "landingpage04.png",
+  ]
   const feature = [
     "Fitur Jual Beli Barang Bekas",
     "Fitur Jarak Terdekat",
@@ -32,7 +38,7 @@ const Landing = () => {
   return (
     <>
       {hide ? (
-        <div className="flex flex-col min-h-screen justify-center items-center fixed right-0 left-0 top-0 z-20">
+        <main className="flex flex-col min-h-screen justify-center items-center fixed right-0 left-0 top-0 z-20">
           <Carousel className="w-full max-w-4xl bg-white rounded-xl p-4 absolute z-10">
             <div className="flex justify-end w-full">
               <IoIosCloseCircle
@@ -52,7 +58,7 @@ const Landing = () => {
                     <CardContent className="flex flex-col items-center justify-center gap-3">
                       <img
                         className="h-96"
-                        src={`./landingpage0${index + 1}.png`}
+                        src={img[index]}
                         alt="img"
                       />
                       {index < 3 ? (
@@ -93,7 +99,7 @@ const Landing = () => {
             <CarouselNext className="h-14 w-14" />
           </Carousel>
           <div className="bg-slate-800/40 w-full min-h-screen backdrop-blur-md relative"></div>
-        </div>
+        </main>
       ) : (
         <div></div>
       )}
