@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "../../components/fragments/HeaderAuth";
 import Address from "@/components/fragments/Address";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useState } from "react";
@@ -11,6 +10,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/RegisterContext";
 import useLogin from "@/hooks/useLogin";
+import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const Register: React.FC = () => {
   useLogin();
@@ -90,9 +90,8 @@ const Register: React.FC = () => {
   };
 
   return (
-    <main className="">
-      <Navbar title="Daftar" />
-      <div className="flex justify-around items-center relative bg-[#135699] pt-2 px-10 min-h-screen">
+    <AddHeaderAuth title="daftar">
+      <main className="flex justify-around items-center relative bg-[#135699] pt-2 px-10 min-h-screen">
         <img
           className="w-[450px] max-w-lg pt-16"
           src="./login01.png"
@@ -178,8 +177,8 @@ const Register: React.FC = () => {
             </Link>
           </p>
         </form>
-      </div>
-    </main>
+      </main>
+    </AddHeaderAuth>
   );
 };
 

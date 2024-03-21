@@ -1,12 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "../../components/fragments/HeaderAuth";
 import { useEffect, useState } from "react";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { axiosInstance } from "@/lib/axios";
 import { useToast } from "@/components/ui/use-toast";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useNavigate, useParams } from "react-router-dom";
+import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const ResetConfirm = () => {
   const { token } = useParams();
@@ -70,9 +70,8 @@ const ResetConfirm = () => {
   };
 
   return (
-    <main className="">
-      <Navbar title="Reset kata sandi" />
-      <div className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
+    <AddHeaderAuth title="reset kata sandi">
+      <main className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
         <img
           className="w-[450px] max-w-lg pt-16"
           src="https://i.ibb.co/S32Zj7J/reset01.png"
@@ -80,7 +79,7 @@ const ResetConfirm = () => {
         />
         <form
           onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-24 w-[450px] gap-7 p-6 rounded-lg bg-white"
+          className="flex flex-col justify-center items-center mt-20 w-[450px] gap-7 p-6 rounded-lg bg-white"
         >
           <h1 className="self-start text-2xl font-semibold mb-3">
             Reset kata sandi
@@ -136,8 +135,8 @@ const ResetConfirm = () => {
             <Button className="h-12 px-16">Kirim</Button>
           )}
         </form>
-      </div>
-    </main>
+      </main>
+    </AddHeaderAuth>
   );
 };
 

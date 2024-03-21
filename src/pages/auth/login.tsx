@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Navbar from "../../components/fragments/HeaderAuth";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -9,6 +8,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/LoginContext";
 import useLogin from "./../../hooks/useLogin";
+import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const Login = () => {
   useLogin();
@@ -66,17 +66,14 @@ const Login = () => {
   };
 
   return (
-    <main className="">
-      <Link to="/">
-        <Navbar title="Masuk" />
-      </Link>
-      <div className="flex justify-around items-center min-h-screen relative bg-[#135699] pt-8 px-10">
+    <AddHeaderAuth title="masuk">
+      <main className="flex justify-around items-center min-h-screen relative bg-[#135699] pt-8 px-10">
         <img className="w-[450px] max-w-lg" src="./login01.png" alt="img" />
         <form
           onSubmit={onSubmit}
           className="flex flex-col justify-center items-center mt-7 w-[450px] gap-6 p-6 rounded-lg bg-white"
         >
-          <h1 className="self-start text-2xl font-semibold mb-7 bg-gree">
+          <h1 className="self-start text-2xl font-semibold mb-4 bg-gree">
             Masuk
           </h1>
           <Input
@@ -132,8 +129,8 @@ const Login = () => {
             </p>
           </div>
         </form>
-      </div>
-    </main>
+      </main>
+    </AddHeaderAuth>
   );
 };
 
