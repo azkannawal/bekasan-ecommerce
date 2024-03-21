@@ -5,6 +5,7 @@ import { axiosInstance } from "@/lib/axios";
 import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
 import { Input } from "../ui/input";
+import useSnap from "@/hooks/useSnap";
 
 interface BuyProductProps {
   id: string;
@@ -15,6 +16,7 @@ const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
   const [check, setCheck] = useState<boolean>(false);
   const [buy, setBuy] = useState<boolean>(false);
   const { accessToken, refreshToken, setTokens } = useAuth();
+  const { snapPopup } = useSnap();
 
   const handlePay = async () => {
     try {
@@ -28,7 +30,8 @@ const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
         variant: "sucsess",
         description: response.data.message,
       });
-      console.log(response.data);
+      console.log(response.data.data.payment_id);
+      snapPopup(response.data.data.payment_id);
     } catch (error: any) {
       if (
         error.response.status === 401 &&
