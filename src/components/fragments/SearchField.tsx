@@ -10,7 +10,7 @@ const SearchField = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const { accessToken, refreshToken, setTokens } = useAuth();
-  const { setProductData } = useProductData();
+  const { setProductData, setSavedQuery } = useProductData();
 
   const handleSearch = async () => {
     try {
@@ -21,11 +21,10 @@ const SearchField = () => {
         },
         params: {
           query: searchQuery,
-          category: "",
-          sort: "distance",
           page: 1,
         },
       });
+      setSavedQuery(searchQuery);
       console.log(response.data.data.products);
       setProductData(response.data.data.products);
     } catch (error: any) {

@@ -82,7 +82,7 @@ const SellTransaction = () => {
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl font-bold">{item.product_name}</h1>
                 <h2 className="text-lg font-semibold text-[#135699]">
-                  Rp {item.product_price}
+                  Rp {item.product_price.toLocaleString("id-ID")}
                 </h2>
                 <h3 className="font-semibold">{item.owner_name}</h3>
               </div>

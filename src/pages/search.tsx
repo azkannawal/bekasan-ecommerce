@@ -8,30 +8,48 @@ import { Button } from "@/components/ui/button";
 import { FaSortAmountDown } from "react-icons/fa";
 import CategoryDropdown from "./../components/fragments/CategoryDropdown";
 import AddNavbar from "@/components/layouts/AddNavbar";
+import { useState } from "react";
 
 const Search: React.FC = () => {
   useNot();
-  const { setProductData } = useProductData();
+  const { setProductData, savedQuery, setSavedQuery } = useProductData();
   const { accessToken, refreshToken, setTokens } = useAuth();
+  const [savedCategory, setSavedCategory] = useState("");
 
   const handleSearch = async (
     category: string,
     sort: string
   ): Promise<void> => {
     try {
+      let query = savedQuery; // Gunakan nilai yang disimpan sebelumnya sebagai nilai default
+
+      if (!category && savedCategory) {
+        // Jika category tidak diberikan tapi savedCategory ada, gunakan savedCategory sebagai kategori
+        category = savedCategory;
+      } else if (!category && !savedCategory) {
+        // Jika keduanya kosong, maka tidak ada kategori yang diberikan, gunakan query yang disimpan
+        query = savedQuery;
+      } else if (category) {
+        // Jika kategori baru diberikan, simpan nilai query sebagai kosong
+        query = "";
+      }
       const response = await axiosInstance.get(`/product/search`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "ngrok-skip-browser-warning": true,
         },
         params: {
-          query: "",
+          query: query,
           category: category,
           sort: sort,
           page: 1,
         },
       });
       setProductData(response.data.data.products);
+      setSavedCategory(category);
+      if (category) {
+        setSavedQuery("");
+      }
     } catch (error: any) {
       if (error.response?.status === 401 && error.response.data.is_expired) {
         getNewToken(refreshToken, setTokens);

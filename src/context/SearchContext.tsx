@@ -11,10 +11,14 @@ interface ProductData {
 
 interface ProductDataContextType {
   productData: ProductData[] | null;
+  savedQuery: string | null;
   setProductData: React.Dispatch<React.SetStateAction<ProductData[] | null>>;
+  setSavedQuery: (query: string) => void;
 }
 
 const ProductDataContext = createContext<ProductDataContextType>({
+  savedQuery: null,
+  setSavedQuery: () => {},
   productData: null,
   setProductData: () => {},
 });
@@ -29,9 +33,10 @@ export const ProductDataProvider: React.FC<ProductDataProviderProps> = ({
   children,
 }) => {
   const [productData, setProductData] = useState<ProductData[] | null>(null);
+  const [savedQuery, setSavedQuery] = useState<string | null>(null);
 
   return (
-    <ProductDataContext.Provider value={{ productData, setProductData }}>
+    <ProductDataContext.Provider value={{ productData, savedQuery, setSavedQuery, setProductData }}>
       {children}
     </ProductDataContext.Provider>
   );
