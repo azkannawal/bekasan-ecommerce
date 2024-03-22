@@ -6,6 +6,7 @@ import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
 import { Input } from "../ui/input";
 import useSnap from "@/hooks/useSnap";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 interface BuyProductProps {
   id: string;
@@ -15,11 +16,13 @@ const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
   const { toast } = useToast();
   const [check, setCheck] = useState<boolean>(false);
   const [buy, setBuy] = useState<boolean>(false);
+  const [loadButton, setLoadButton] = useState<boolean>(false);
   const { accessToken, refreshToken, setTokens } = useAuth();
   const { snapPopup } = useSnap();
 
   const handlePay = async () => {
     try {
+      setLoadButton(true)
       const response = await axiosInstance.post(`/product/${id}`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -41,6 +44,8 @@ const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
       } else {
         console.log(error.response);
       }
+    } finally {
+      setLoadButton(false);
     }
   };
 
@@ -71,6 +76,12 @@ const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
             </p>
           </div>
           {check ? (
+            loadButton ? (
+            <Button className="h-12 px-12" disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Tunggu
+            </Button>
+          ) : (
             <Button
               onClick={() => {
                 handlePay();
@@ -78,7 +89,7 @@ const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
               className="py-[22px] bg-white text-[#0f1720 hover:bg-white]"
             >
               Beli
-            </Button>
+            </Button>)
           ) : (
             <Button disabled className="py-[22px] bg-white text-[#0f1720]">
               Beli

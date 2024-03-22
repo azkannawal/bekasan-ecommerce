@@ -51,6 +51,7 @@ const Modal = ({
         description: response.data.message,
       });
       setInput("");
+      closeModal();
     } catch (error: any) {
       setInput("");
       if (
@@ -80,6 +81,7 @@ const Modal = ({
         description: response.data.message,
       });
       setInput("");
+      closeModal();
     } catch (error: any) {
       setInput("");
       if (
@@ -104,6 +106,7 @@ const Modal = ({
         config
       );
       console.log(response.data.data);
+      closeModal();
     } catch (error: any) {
       if (
         error.response.status === 401 &&

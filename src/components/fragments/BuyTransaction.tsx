@@ -9,7 +9,7 @@ import { useUser } from "@/context/RegisterContext";
 
 interface Product {
   product_name: string;
-  product_price: number;
+  product_price: string;
   owner_name: string;
   owner_id: string;
   withdrawal_code: number;
@@ -22,6 +22,7 @@ const BuyTransaction = () => {
   const [data, setData] = useState<Product[]>([]);
   const [modalState, setModalState] = useState<{ [key: string]: number }>({});
   const [input, setInput] = useState<string>("");
+  const [auto, setAuto] = useState(false);
   const { userId } = useUser();
   const config = {
     headers: {
@@ -71,11 +72,12 @@ const BuyTransaction = () => {
       ...prevState,
       [id]: 0,
     }));
+    setAuto(true);
   };
 
   useEffect(() => {
     getList();
-  }, [accessToken]); //tambah depedensi rerender
+  }, [auto, accessToken]);
 
   return (
     <main className="flex flex-col gap-2 py-4 relative">
@@ -85,12 +87,15 @@ const BuyTransaction = () => {
             className="flex justify-between pb-4 border-b border-[#135699] relative"
             key={index}
           >
-            <div className="flex gap-6">
+            <div className="flex lg:flex-row sm:flex-col gap-6">
               <img src={item.url_product} className="w-40" alt="img" />
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl font-bold">{item.product_name}</h1>
                 <h2 className="text-lg font-semibold text-[#135699]">
-                  Rp {item.product_price.toLocaleString("id-ID")}
+                  {parseFloat(item.product_price).toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
                 </h2>
                 <h3 className="font-semibold">{item.owner_name}</h3>
               </div>

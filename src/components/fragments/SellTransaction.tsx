@@ -7,7 +7,7 @@ import Modal from "./Modal";
 
 interface Product {
   product_name: string;
-  product_price: number;
+  product_price: string;
   owner_name: string;
   cancel_code: number;
   url_product: string;
@@ -19,6 +19,7 @@ const SellTransaction = () => {
   const [modalState, setModalState] = useState<{ [key: string]: number }>({});
   const [data, setData] = useState<Product[]>([]);
   const [input, setInput] = useState<string>("");
+  const [auto, setAuto] = useState(false);
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -52,7 +53,7 @@ const SellTransaction = () => {
 
   useEffect(() => {
     getList();
-  }, [accessToken]);
+  }, [auto, accessToken]);
 
   const handleInputChange = (value: string) => {
     setInput(value);
@@ -70,19 +71,23 @@ const SellTransaction = () => {
       ...prevState,
       [id]: 0,
     }));
+    setAuto(true);
   };
 
   return (
-    <main className="flex flex-col gap-2 border-b border-slate-900 py-4">
+    <main className="flex flex-col gap-2 py-4 relative">
       {data ? (
         data.map((item, index) => (
-          <div className="flex justify-between" key={index}>
+          <div
+            className="flex justify-between pb-4 border-b border-[#135699] relative"
+            key={index}
+          >
             <div className="flex gap-6">
               <img src={item.url_product} className="w-40" alt="img" />
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl font-bold">{item.product_name}</h1>
                 <h2 className="text-lg font-semibold text-[#135699]">
-                  Rp {item.product_price.toLocaleString("id-ID")}
+                  {parseFloat(item.product_price).toLocaleString("id-ID", {style: "currency", currency: "IDR"})}
                 </h2>
                 <h3 className="font-semibold">{item.owner_name}</h3>
               </div>
