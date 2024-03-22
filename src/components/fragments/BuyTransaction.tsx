@@ -4,11 +4,14 @@ import { getNewToken } from "@/hooks/useToken";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Modal from "./Modal";
+import { Link } from "react-router-dom";
+import { useUser } from "@/context/RegisterContext";
 
 interface Product {
   product_name: string;
   product_price: number;
   owner_name: string;
+  owner_id: string;
   withdrawal_code: number;
   url_product: string;
   transaction_id: string;
@@ -19,6 +22,7 @@ const BuyTransaction = () => {
   const [data, setData] = useState<Product[]>([]);
   const [modalState, setModalState] = useState<{ [key: string]: number }>({});
   const [input, setInput] = useState<string>("");
+  const { userId } = useUser();
   const config = {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -30,6 +34,7 @@ const BuyTransaction = () => {
     try {
       const response = await axiosInstance.get(`transaction/buy-list`, config);
       setData(response.data.data);
+      console.log(response.data.data);
       const initialState = response.data.data.reduce(
         (acc: any, item: Product) => {
           acc[item.transaction_id] = 0;
@@ -102,7 +107,9 @@ const BuyTransaction = () => {
                 <Button onClick={() => openModal(item.transaction_id, 2)}>
                   Tidak Jadi Beli
                 </Button>
-                <Button>Chat Penjual</Button>
+                <Link to={`../chat/toseller/${item.owner_id}${userId}`}>
+                  <Button>Chat Penjual</Button>
+                </Link>
               </div>
             </div>
             {modalState[item.transaction_id] === 1 && (
