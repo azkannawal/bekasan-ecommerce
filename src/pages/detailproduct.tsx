@@ -6,8 +6,10 @@ import { getNewToken } from "@/hooks/useToken";
 import BuyProduct from "./../components/fragments/BuyProduct";
 import AddNavbar from "@/components/layouts/AddNavbar";
 import { useUser } from "@/context/RegisterContext";
+import useNot from "@/hooks/useNot";
 
 const DetailProduct = () => {
+  useNot();
   const { id } = useParams();
   const { accessToken, refreshToken, setTokens } = useAuth();
   const { userId } = useUser();

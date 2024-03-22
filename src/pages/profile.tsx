@@ -3,12 +3,14 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/LoginContext";
 import { useUser } from "@/context/RegisterContext";
+import useNot from "@/hooks/useNot";
 import { getNewToken } from "@/hooks/useToken";
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  useNot();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { accessToken, refreshToken } = useAuth();
@@ -31,7 +33,7 @@ const Profile = () => {
       const response = await axiosInstance.get("auth/my-data", config);
       setUserData(response.data.data.id, response.data.data.name);
       console.log(response.data.data);
-      setData(response.data.data)
+      setData(response.data.data);
     } catch (error: any) {
       if (
         error.response.status === 401 &&
@@ -103,18 +105,9 @@ const Profile = () => {
         <label htmlFor="email">Email akun UB</label>
         <Input id="email" placeholder={data.email} disabled />
         <label htmlFor="password">Kata sandi</label>
-        <Input
-          id="password"
-          placeholder="********"
-          type="password"
-          disabled
-        />
+        <Input id="password" placeholder="********" type="password" disabled />
         <label htmlFor="address">Alamat</label>
-        <Input
-          id="address"
-          placeholder={data.address}
-          disabled
-        />
+        <Input id="address" placeholder={data.address} disabled />
         <label htmlFor="account">Nomor rekening</label>
         <form action="" className="flex gap-4">
           <Input id="account" placeholder="Nomor rekening" />

@@ -14,6 +14,7 @@ import app from "./../lib/firebase";
 import { axiosInstance } from "@/lib/axios";
 import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
+import useNot from "@/hooks/useNot";
 const database = getDatabase(app);
 
 interface Message {
@@ -24,6 +25,7 @@ interface Message {
 }
 
 const ChatToSeller = () => {
+  useNot();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { accessToken, refreshToken, setTokens } = useAuth();
