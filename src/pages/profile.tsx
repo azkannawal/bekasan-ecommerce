@@ -15,9 +15,9 @@ const Profile = () => {
   const { setUserData } = useUser();
   const { setTokens } = useAuth();
   const [data, setData] = useState({
-    name: "John Doe",
-    email: "johndoe@student.ub.ac.id",
-    address: "Jl. Veteran, Ketawanggede, Kec. Lowokwaru, Kota Malang, Jawa Timur 65145",
+    name: "",
+    email: "",
+    address: "",
   });
 
   const getUserData = async () => {
