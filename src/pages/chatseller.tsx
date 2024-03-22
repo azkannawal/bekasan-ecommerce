@@ -173,7 +173,7 @@ const ChatToSeller = () => {
 
   return (
     <div className="flex flex-col min-h-screen pb-20 justify-end items-center relative">
-      <div className="flex items-center fixed w-full px-[390px] py-4 top-0 mb-4 text-xl font-bold text-white bg-[#135699]">
+      <div className="flex items-center fixed w-full lg:px-[390px] py-4 top-0 mb-4 text-xl font-bold text-white bg-[#135699] sm:px-[50px]">
         <img
           src="https://i.ibb.co/ctyg3bB/avatar.png"
           className="w-10 mr-4"
@@ -193,7 +193,7 @@ const ChatToSeller = () => {
           </div>
         </div>
       ))}
-      <div className="flex justify-center fixed w-full bottom-0 px-[390px] py-4 bg-[#135699]">
+      <div className="flex justify-center fixed w-full bottom-0 lg:px-[390px] py-4 bg-[#135699] sm:px-[100px]">
         <input
           type="text"
           value={inputChat}
