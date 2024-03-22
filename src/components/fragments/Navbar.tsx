@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/context/LoginContext";
 import { useEffect, useState } from "react";
 import SearchField from "./SearchField";
+import { FaHistory } from "react-icons/fa";
 
 const Navbar = () => {
   const [verify, setVerify] = useState(false);
@@ -58,10 +59,7 @@ const Navbar = () => {
               />
             </Link>
             <Link to="/transaction">
-              <img
-                src="https://i.ibb.co/QjMm0fp/notif.png"
-                className="m-2 h-6"
-              />
+              <FaHistory className="m-2 ml-3" size={25} color="white" />
             </Link>
             <Link to="/profile">
               <img

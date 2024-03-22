@@ -105,6 +105,10 @@ const Modal = ({
         data,
         config
       );
+      toast({
+        variant: "sucsess",
+        description: response.data.message,
+      });
       console.log(response.data.data);
       closeModal();
     } catch (error: any) {
