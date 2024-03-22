@@ -1,14 +1,16 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
 import BuyProduct from "./../components/fragments/BuyProduct";
 import AddNavbar from "@/components/layouts/AddNavbar";
+import { useUser } from "@/context/RegisterContext";
 
 const DetailProduct = () => {
   const { id } = useParams();
   const { accessToken, refreshToken, setTokens } = useAuth();
+  const { userId } = useUser();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState({
     product_id: "",
@@ -97,11 +99,13 @@ const DetailProduct = () => {
                 <h2> {(data.owner_distance / 1000).toFixed(2)} KM</h2>
               </div>
             </div>
-            <img
-              src="https://i.ibb.co/6wW3rrf/send.png"
-              alt="img"
-              className="h-8"
-            />
+            <Link to={`/chat/toseller/${data.owner_id}${userId}`}>
+              <img
+                src="https://i.ibb.co/6wW3rrf/send.png"
+                alt="img"
+                className="h-8"
+              />
+            </Link>
           </div>
         </div>
         {id ? <BuyProduct id={id} /> : null}

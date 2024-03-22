@@ -1,8 +1,19 @@
 import { useState, useEffect } from "react";
-import { getDatabase, ref, push, onValue, update, DataSnapshot, get } from "firebase/database";
-import { useParams } from "react-router-dom";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  update,
+  DataSnapshot,
+  get,
+} from "firebase/database";
+import { useNavigate, useParams } from "react-router-dom";
 import app from "./../lib/firebase";
 import { useUser } from "./../context/RegisterContext";
+import { useAuth } from "@/context/LoginContext";
+import { axiosInstance } from "@/lib/axios";
+import { getNewToken } from "@/hooks/useToken";
 
 interface Message {
   sender: string;
@@ -15,15 +26,46 @@ const database = getDatabase(app);
 
 const ChatToBuyer = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { userId } = useUser();
+  const { accessToken, refreshToken, setTokens } = useAuth();
   const [inputChat, setInputChat] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const seller: string = userId ? userId : "";
   const buyer = id ? id.substring(seller.length) : "";
-  console.log(buyer)
+  const [buyername, setBuyername] = useState("");
+
+  const getBuyerName = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "ngrok-skip-browser-warning": true,
+      },
+    };
+    try {
+      const response = await axiosInstance.get(`chat/who/${buyer}`, config);
+      setBuyername(response.data.data.name);
+    } catch (error: any) {
+      if (
+        error.response.status === 401 &&
+        error.response.data.is_expired === true
+      ) {
+        getNewToken(refreshToken, setTokens);
+      } else if (
+        error.response.status === 401 &&
+        error.response.data.is_expired === false
+      ) {
+        navigate("/login");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      } else {
+        console.log(error.response);
+      }
+    }
+  };
 
   const handleRead = () => {
-    const path = ref(database,`chats/${seller}${buyer}`);
+    const path = ref(database, `chats/${seller}${buyer}`);
     get(path)
       .then((snapshot: DataSnapshot) => {
         const chatData = snapshot.val();
@@ -47,7 +89,8 @@ const ChatToBuyer = () => {
   };
 
   useEffect(() => {
-    handleRead()
+    getBuyerName();
+    handleRead();
     const path = ref(database, `chats/${id}`);
     onValue(path, (snapshot) => {
       const data = snapshot.val();
@@ -63,7 +106,7 @@ const ChatToBuyer = () => {
         setMessages([]);
       }
     });
-  }, [messages]);
+  }, []);
 
   const sendMessage = () => {
     if (inputChat.trim() !== "") {
@@ -71,7 +114,9 @@ const ChatToBuyer = () => {
       const message: Message = {
         sender: seller,
         content: inputChat,
-        hours: `${currentTime.getHours()}:${(currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes()}`,
+        hours: `${currentTime.getHours()}:${
+          (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes()
+        }`,
         buyerRead: false,
       };
       push(ref(database, `chats/${id}`), message);
@@ -87,7 +132,7 @@ const ChatToBuyer = () => {
           className="w-10 mr-4"
           alt="img"
         />
-        Buyer Name
+        {buyername}
       </div>
       {messages.map((message) => (
         <div

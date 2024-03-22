@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "./../context/RegisterContext";
 import {
   getDatabase,
@@ -11,6 +11,9 @@ import {
   update,
 } from "firebase/database";
 import app from "./../lib/firebase";
+import { axiosInstance } from "@/lib/axios";
+import { useAuth } from "@/context/LoginContext";
+import { getNewToken } from "@/hooks/useToken";
 const database = getDatabase(app);
 
 interface Message {
@@ -22,14 +25,45 @@ interface Message {
 
 const ChatToSeller = () => {
   const { id } = useParams<{ id: string }>();
-  const { userId } = useUser();
+  const navigate = useNavigate();
+  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { userId, username } = useUser();
   const buyer: string = userId ? userId : "";
   const seller: string = id
     ? id.substring(0, id.length - buyer.toString().length)
     : "";
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputChat, setInputChat] = useState("");
-  const sellername = "namazaza";
+  const [sellername, setSellername] = useState("");
+
+  const getSellerName = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "ngrok-skip-browser-warning": true,
+      },
+    };
+    try {
+      const response = await axiosInstance.get(`chat/who/${seller}`, config);
+      setSellername(response.data.data.name);
+    } catch (error: any) {
+      if (
+        error.response.status === 401 &&
+        error.response.data.is_expired === true
+      ) {
+        getNewToken(refreshToken, setTokens);
+      } else if (
+        error.response.status === 401 &&
+        error.response.data.is_expired === false
+      ) {
+        navigate("/login");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      } else {
+        console.log(error.response);
+      }
+    }
+  };
 
   const handleRead = () => {
     const path = ref(database, `chats/${seller}${buyer}`);
@@ -55,25 +89,6 @@ const ChatToSeller = () => {
       });
   };
 
-  useEffect(() => {
-    handleRead();
-    const path = ref(database, `chats/${id}`);
-    onValue(path, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const messagesArray = Object.entries<Message>(data).map(
-          ([key, value]) => ({
-            id: key,
-            ...value,
-          })
-        );
-        setMessages(messagesArray);
-      } else {
-        setMessages([]);
-      }
-    });
-  }, [messages]);
-
   const sendMessage = async () => {
     if (inputChat.trim() !== "") {
       const currentTime = new Date();
@@ -85,7 +100,9 @@ const ChatToSeller = () => {
       } = {
         sender: buyer,
         content: inputChat,
-        hours: `${currentTime.getHours()}:${(currentTime.getMinutes() < 10 ? '0' : '') + currentTime.getMinutes()}`,
+        hours: `${currentTime.getHours()}:${
+          (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes()
+        }`,
         sellerRead: false,
       };
       push(ref(database, `chats/${id}`), message);
@@ -95,7 +112,7 @@ const ChatToSeller = () => {
         displayName: string;
         uid: string;
       } = {
-        displayName: userId ? userId : "",
+        displayName: username ? username : "",
         uid: userId ? userId : "",
       };
       const buyerRef = ref(database, `buyer/${seller}`);
@@ -114,8 +131,8 @@ const ChatToSeller = () => {
       }
 
       const sellerData = {
-        uid: seller, //owner_id
-        displayName: sellername, //owner_name
+        uid: seller,
+        displayName: sellername,
       };
       const sellerRef = ref(database, `seller/${userId}`);
       const sellerSnapshot = await get(sellerRef);
@@ -134,6 +151,26 @@ const ChatToSeller = () => {
     }
   };
 
+  useEffect(() => {
+    getSellerName();
+    handleRead();
+    const path = ref(database, `chats/${id}`);
+    onValue(path, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const messagesArray = Object.entries<Message>(data).map(
+          ([key, value]) => ({
+            id: key,
+            ...value,
+          })
+        );
+        setMessages(messagesArray);
+      } else {
+        setMessages([]);
+      }
+    });
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen pb-20 justify-end items-center relative">
       <div className="flex items-center fixed w-full px-[390px] py-4 top-0 mb-4 text-xl font-bold text-white bg-[#135699]">
@@ -142,7 +179,7 @@ const ChatToSeller = () => {
           className="w-10 mr-4"
           alt="img"
         />
-        Seller Name
+        {sellername}
       </div>
       {messages.map((message) => (
         <div
