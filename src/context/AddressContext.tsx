@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
-interface Address {
-  address: string,
+type Address = {
+  address: string;
   longitude: number;
   latitude: number;
 }
@@ -10,6 +10,10 @@ interface UserContextType {
   user: Address | null;
   setUser: React.Dispatch<React.SetStateAction<Address | null>>;
 }
+
+type Props = {
+  children: ReactNode;
+};
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -21,9 +25,8 @@ export const addressUser = (): UserContextType => {
   return context;
 };
 
-export const AddressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AddressProvider = ({ children }: Props) => {
   const [user, setUser] = useState<Address | null>(null);
-
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}

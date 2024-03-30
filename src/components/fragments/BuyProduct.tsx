@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { axiosInstance } from "@/lib/axios";
@@ -8,11 +8,11 @@ import { Input } from "../ui/input";
 import useSnap from "@/hooks/useSnap";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
-interface BuyProductProps {
+type BuyProductProps = {
   id: string;
 }
 
-const BuyProduct: React.FC<BuyProductProps> = ({ id }) => {
+const BuyProduct = ({ id }: BuyProductProps) => {
   const { toast } = useToast();
   const [check, setCheck] = useState<boolean>(false);
   const [buy, setBuy] = useState<boolean>(false);

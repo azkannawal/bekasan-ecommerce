@@ -10,7 +10,7 @@ import CategoryDropdown from "./../components/fragments/CategoryDropdown";
 import AddNavbar from "@/components/layouts/AddNavbar";
 import { useState } from "react";
 
-const Search: React.FC = () => {
+const Search = () => {
   useNot();
   const { setProductData, savedQuery, setSavedQuery } = useProductData();
   const { accessToken, refreshToken, setTokens } = useAuth();

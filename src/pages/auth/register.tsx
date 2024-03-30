@@ -12,7 +12,7 @@ import { useUser } from "@/context/RegisterContext";
 import useLogin from "@/hooks/useLogin";
 import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
-const Register: React.FC = () => {
+const Register = () => {
   useLogin();
   const { user } = addressUser();
   const { setUserData } = useUser();

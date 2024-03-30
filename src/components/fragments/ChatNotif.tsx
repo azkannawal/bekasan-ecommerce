@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  off,
-} from "firebase/database";
+import { useState, useEffect } from "react";
+import { getDatabase, ref, onValue, off } from "firebase/database";
 import app from "./../../lib/firebase";
-
 const database = getDatabase(app);
 
-interface NotificationIconProps {
+type Props = {
   datapath: string;
   read: string;
 }
 
-const NotificationIcon: React.FC<NotificationIconProps> = ({
-  datapath,
-  read,
-}) => {
+const NotificationIcon = ({ datapath, read }: Props) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {

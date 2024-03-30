@@ -1,13 +1,13 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
 
-interface ProductData {
+type ProductData = {
   product_id: string;
   product_name: string;
   product_price: number;
   owner_name: string;
   owner_distance: number;
   url_photo_product: string;
-}
+};
 
 interface ProductDataContextType {
   productData: ProductData[] | null;
@@ -16,6 +16,10 @@ interface ProductDataContextType {
   setSavedQuery: (query: string) => void;
 }
 
+type Props = {
+  children: ReactNode;
+};
+
 const ProductDataContext = createContext<ProductDataContextType>({
   savedQuery: null,
   setSavedQuery: () => {},
@@ -23,20 +27,15 @@ const ProductDataContext = createContext<ProductDataContextType>({
   setProductData: () => {},
 });
 
-interface ProductDataProviderProps {
-  children: ReactNode;
-}
-
 export const useProductData = () => useContext(ProductDataContext);
 
-export const ProductDataProvider: React.FC<ProductDataProviderProps> = ({
-  children,
-}) => {
+export const ProductDataProvider = ({ children }: Props) => {
   const [productData, setProductData] = useState<ProductData[] | null>(null);
   const [savedQuery, setSavedQuery] = useState<string | null>(null);
-
   return (
-    <ProductDataContext.Provider value={{ productData, savedQuery, setSavedQuery, setProductData }}>
+    <ProductDataContext.Provider
+      value={{ productData, savedQuery, setSavedQuery, setProductData }}
+    >
       {children}
     </ProductDataContext.Provider>
   );

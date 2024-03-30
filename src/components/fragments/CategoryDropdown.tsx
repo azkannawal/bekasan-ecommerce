@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,13 +9,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { IoIosArrowDown } from "react-icons/io";
 
-interface CategoryDropdownProps {
+type Props = {
   handleSearch: (category: string, sort: string) => void;
-}
+};
 
-const CategoryDropdown: React.FC<CategoryDropdownProps> = ({
-  handleSearch,
-}) => {
+const CategoryDropdown = ({ handleSearch }: Props) => {
   const [dropdown1, setDropdown1] = useState(0);
   const [position, setPosition] = useState("");
 

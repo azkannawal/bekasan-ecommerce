@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { axiosInstance } from '@/lib/axios';
 
-interface AuthResponseData {
+type AuthResponseData = {
   data: {
     access_token: string;
   };

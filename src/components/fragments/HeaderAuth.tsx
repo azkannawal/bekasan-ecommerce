@@ -1,8 +1,8 @@
-interface Props {
+type Props = {
   title: string;
 }
 
-const HeaderAuth: React.FC<Props> = ({ title }) => {
+const HeaderAuth= ({ title }: Props) => {
   return (
     <nav className="flex items-center gap-4 absolute w-full z-10 px-4 bg-white">
       <img className="w-[80px]" src="https://i.ibb.co/t87W7vK/logo.png" alt="img" />

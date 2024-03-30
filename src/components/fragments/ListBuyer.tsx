@@ -1,14 +1,18 @@
 import { getDatabase, off, onValue, ref } from "firebase/database";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import app from "./../../lib/firebase";
 import { useUser } from "./../../context/RegisterContext";
 import NotificationIcon from "./ChatNotif";
-
 const database = getDatabase(app);
 
-const ListBuyer: React.FC = () => {
-  const [buyerData, setBuyerData] = useState<any[]>([]);
+type Buyer = {
+  uid: string;
+  displayName: string;
+};
+
+const ListBuyer = () => {
+  const [buyerData, setBuyerData] = useState<Buyer[]>([]);
   const { userId } = useUser();
   const seller: string = userId ? userId : "";
 

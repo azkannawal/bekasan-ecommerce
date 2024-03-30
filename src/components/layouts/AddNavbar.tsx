@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import Navbar from "./../fragments/Navbar";
 
-interface AddNavbarProps {
+type Props = {
   children: ReactNode;
 }
 
-const AddNavbar: React.FC<AddNavbarProps> = ({ children }) => {
+const AddNavbar = ({ children }: Props) => {
   return (
     <main className="relative">
       <Navbar />

@@ -5,17 +5,17 @@ import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-interface Props {
+type Props = {
   style: string;
 }
 
-interface Product {
+type Product = {
   id: string;
   name: string;
   url_category: string;
 }
 
-const Category: React.FC<Props> = ({ style }) => {
+const Category = ({ style } : Props) => {
   const [category, setCategory] = useState<Product[]>([]);
   const { setProductData } = useProductData();
   const { accessToken, refreshToken, setTokens } = useAuth();

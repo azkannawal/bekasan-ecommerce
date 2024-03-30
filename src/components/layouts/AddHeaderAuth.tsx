@@ -1,15 +1,15 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import HeaderAuth from "../fragments/HeaderAuth";
 
-interface AddHeaderAuthProps {
+type Props = {
   children: ReactNode;
   title: string;
 }
 
-const AddHeaderAuth: React.FC<AddHeaderAuthProps> = ({ children, title }) => {
+const AddHeaderAuth = ({ children, title }: Props) => {
   return (
     <main>
-      <HeaderAuth title={title}/>
+      <HeaderAuth title={title} />
       {children}
     </main>
   );
