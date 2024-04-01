@@ -25,7 +25,6 @@ interface Message {
 }
 
 const ChatToSeller = () => {
-  useNot();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { accessToken, refreshToken, setTokens } = useAuth();

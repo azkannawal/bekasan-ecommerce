@@ -1,82 +1,13 @@
+import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./pages/home.tsx";
-import NotFound from "./pages/notfound.tsx";
-import Login from "./pages/auth/login.tsx";
-import Register from "./pages/auth/register.tsx";
-import Reset from "./pages/auth/reset.tsx";
-import ResetConfirm from "./pages/auth/resetconfirm.tsx";
+import { RouterProvider} from "react-router-dom";
 import { AddressProvider } from "./context/AddressContext.tsx";
-import Verify from "./pages/auth/verify.tsx";
-import { Toaster } from "./components/ui/toaster";
-import Search from "./pages/search.tsx";
 import { UserProvider } from "./context/RegisterContext.tsx";
 import { AuthProvider } from "./context/LoginContext";
-import Chat from "./pages/chat.tsx";
-import ChatToSeller from "./pages/chatseller.tsx";
-import ChatToBuyer from "./pages/chatbuyer.tsx";
-import DetailProduct from "./pages/detailproduct.tsx";
 import { ProductDataProvider } from "./context/SearchContext.tsx";
-import Profile from "./pages/profile.tsx";
-import Transaction from "./pages/transaction.tsx";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <NotFound />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/verify",
-    element: <Verify />,
-  },
-  {
-    path: "/reset",
-    element: <Reset />,
-  },
-  {
-    path: "/resetconfirm/:token",
-    element: <ResetConfirm />,
-  },
-  {
-    path: "/search",
-    element: <Search />,
-  },
-  {
-    path: "/chat",
-    element: <Chat />,
-  },
-  {
-    path: "/chat/toseller/:id",
-    element: <ChatToSeller />,
-  },
-  {
-    path: "/chat/tobuyer/:id",
-    element: <ChatToBuyer />,
-  },
-  {
-    path: "/product/:id",
-    element: <DetailProduct />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/transaction",
-    element: <Transaction />,
-  },
-]);
+import { Toaster } from "./components/ui/toaster";
+import router from "./App.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

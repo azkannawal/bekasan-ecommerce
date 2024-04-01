@@ -1,10 +1,8 @@
 import { useState } from "react";
 import ListBuyer from "./../components/fragments/ListBuyer";
 import ListSeller from "@/components/fragments/ListSeller";
-import useNot from "@/hooks/useNot";
 
 const Chat = () => {
-  useNot();
   const [activeTab, setActiveTab] = useState(1);
   const [indicatorPosition, setIndicatorPosition] = useState(0);
 

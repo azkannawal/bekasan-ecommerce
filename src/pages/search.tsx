@@ -1,5 +1,4 @@
 import SearchProduct from "./../components/fragments/SearchProduct";
-import useNot from "@/hooks/useNot";
 import { axiosInstance } from "@/lib/axios";
 import { getNewToken } from "@/hooks/useToken";
 import { useProductData } from "@/context/SearchContext";
@@ -11,7 +10,6 @@ import AddNavbar from "@/components/layouts/AddNavbar";
 import { useState } from "react";
 
 const Search = () => {
-  useNot();
   const { setProductData, savedQuery, setSavedQuery } = useProductData();
   const { accessToken, refreshToken, setTokens } = useAuth();
   const [savedCategory, setSavedCategory] = useState("");

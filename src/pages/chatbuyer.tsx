@@ -14,7 +14,6 @@ import { useUser } from "./../context/RegisterContext";
 import { useAuth } from "@/context/LoginContext";
 import { axiosInstance } from "@/lib/axios";
 import { getNewToken } from "@/hooks/useToken";
-import useNot from "@/hooks/useNot";
 
 interface Message {
   sender: string;
@@ -26,7 +25,6 @@ interface Message {
 const database = getDatabase(app);
 
 const ChatToBuyer = () => {
-  useNot();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { userId } = useUser();

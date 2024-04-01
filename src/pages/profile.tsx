@@ -3,14 +3,12 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/LoginContext";
 import { useUser } from "@/context/RegisterContext";
-import useNot from "@/hooks/useNot";
 import { getNewToken } from "@/hooks/useToken";
 import { axiosInstance } from "@/lib/axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  useNot();
   const { toast } = useToast();
   const navigate = useNavigate();
   const { accessToken, refreshToken } = useAuth();

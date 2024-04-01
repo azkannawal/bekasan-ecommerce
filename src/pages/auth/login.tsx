@@ -7,11 +7,9 @@ import { axiosInstance } from "@/lib/axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/context/LoginContext";
-import useLogin from "./../../hooks/useLogin";
 import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const Login = () => {
-  useLogin();
   const { setTokens } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();

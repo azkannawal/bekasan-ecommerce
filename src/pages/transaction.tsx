@@ -1,10 +1,8 @@
 import { useState } from "react";
 import BuyTransaction from "@/components/fragments/BuyTransaction";
 import SellTransaction from "@/components/fragments/SellTransaction";
-import useNot from "@/hooks/useNot";
 
 const Transaction = () => {
-  useNot();
   const [activeTab, setActiveTab] = useState(1);
   const [indicatorPosition, setIndicatorPosition] = useState(0);
 

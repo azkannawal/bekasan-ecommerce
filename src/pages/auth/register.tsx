@@ -9,11 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useUser } from "@/context/RegisterContext";
-import useLogin from "@/hooks/useLogin";
 import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const Register = () => {
-  useLogin();
   const { user } = addressUser();
   const { setUserData } = useUser();
   const { toast } = useToast();

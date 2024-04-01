@@ -4,11 +4,9 @@ import { useState } from "react";
 import { axiosInstance } from "@/lib/axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
-import useLogin from "@/hooks/useLogin";
 import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const Reset = () => {
-  useLogin();
   const { toast } = useToast();
   const [loadButton, setLoadButton] = useState(false);
   const [email, setEmail] = useState("");
