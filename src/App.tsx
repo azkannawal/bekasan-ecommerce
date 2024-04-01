@@ -6,9 +6,9 @@ import Register from "./pages/auth/register.tsx";
 import Reset from "./pages/auth/reset.tsx";
 import ResetConfirm from "./pages/auth/resetconfirm.tsx";
 import Verify from "./pages/auth/verify.tsx";
-import Chat from "./pages/chat.tsx";
-import ChatToSeller from "./pages/chatseller.tsx";
-import ChatToBuyer from "./pages/chatbuyer.tsx";
+import Chat from "./pages/chat/chat.tsx";
+import ChatToSeller from "./pages/chat/chatseller.tsx";
+import ChatToBuyer from "./pages/chat/chatbuyer.tsx";
 import DetailProduct from "./pages/detailproduct.tsx";
 import Profile from "./pages/profile.tsx";
 import Transaction from "./pages/transaction.tsx";
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <PrivateRoute/>,
+    element: <PrivateRoute />,
     children: [
       {
         path: "/search",
@@ -80,9 +80,8 @@ const router = createBrowserRouter([
         path: "/transaction",
         element: <Transaction />,
       },
-    ]
-
-  }
+    ],
+  },
 ]);
 
 export default router;

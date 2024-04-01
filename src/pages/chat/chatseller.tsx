@@ -1,41 +1,42 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../../context/RegisterContext";
+import app from "../../lib/firebase";
+import { axiosInstance } from "@/lib/axios";
+import { useAuth } from "@/context/LoginContext";
+import { getNewToken } from "@/hooks/useToken";
 import {
   getDatabase,
   ref,
   push,
   onValue,
-  update,
-  DataSnapshot,
   get,
+  DataSnapshot,
+  update,
 } from "firebase/database";
-import { useNavigate, useParams } from "react-router-dom";
-import app from "./../lib/firebase";
-import { useUser } from "./../context/RegisterContext";
-import { useAuth } from "@/context/LoginContext";
-import { axiosInstance } from "@/lib/axios";
-import { getNewToken } from "@/hooks/useToken";
+const database = getDatabase(app);
 
-interface Message {
+type Message = {
   sender: string;
   content: string;
   hours: string;
-  buyerRead: boolean;
-}
+  sellerRead: boolean;
+};
 
-const database = getDatabase(app);
-
-const ChatToBuyer = () => {
+const ChatToSeller = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { userId } = useUser();
   const { accessToken, refreshToken, setTokens } = useAuth();
-  const [inputChat, setInputChat] = useState<string>("");
+  const { userId, username } = useUser();
+  const buyer: string = userId ? userId : "";
+  const seller: string = id
+    ? id.substring(0, id.length - buyer.toString().length)
+    : "";
   const [messages, setMessages] = useState<Message[]>([]);
-  const seller: string = userId ? userId : "";
-  const buyer = id ? id.substring(seller.length) : "";
-  const [buyername, setBuyername] = useState("");
+  const [inputChat, setInputChat] = useState("");
+  const [sellername, setSellername] = useState("");
 
-  const getBuyerName = async () => {
+  const getSellerName = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -43,8 +44,8 @@ const ChatToBuyer = () => {
       },
     };
     try {
-      const response = await axiosInstance.get(`chat/who/${buyer}`, config);
-      setBuyername(response.data.data.name);
+      const response = await axiosInstance.get(`chat/who/${seller}`, config);
+      setSellername(response.data.data.name);
     } catch (error: any) {
       if (
         error.response.status === 401 &&
@@ -73,11 +74,11 @@ const ChatToBuyer = () => {
           if (chatData.hasOwnProperty(chatId)) {
             const chatEntry = chatData[chatId];
             if (
-              chatEntry.hasOwnProperty("sellerRead") &&
-              chatEntry.sellerRead === false
+              chatEntry.hasOwnProperty("buyerRead") &&
+              chatEntry.buyerRead === false
             ) {
               update(ref(database, `chats/${seller}${buyer}/${chatId}`), {
-                sellerRead: true,
+                buyerRead: true,
               });
             }
           }
@@ -88,8 +89,70 @@ const ChatToBuyer = () => {
       });
   };
 
+  const sendMessage = async () => {
+    if (inputChat.trim() !== "") {
+      const currentTime = new Date();
+      const message: {
+        sender: string;
+        content: string;
+        hours: string;
+        sellerRead: boolean;
+      } = {
+        sender: buyer,
+        content: inputChat,
+        hours: `${currentTime.getHours()}:${
+          (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes()
+        }`,
+        sellerRead: false,
+      };
+      push(ref(database, `chats/${id}`), message);
+      setInputChat("");
+
+      const buyerData: {
+        displayName: string;
+        uid: string;
+      } = {
+        displayName: username ? username : "",
+        uid: userId ? userId : "",
+      };
+      const buyerRef = ref(database, `buyer/${seller}`);
+      const buyerSnapshot = await get(buyerRef);
+      let dataExists = false;
+      buyerSnapshot.forEach((buyer) => {
+        if (buyer.val().uid === buyerData.uid) {
+          dataExists = true;
+          return;
+        }
+      });
+      if (!dataExists) {
+        push(ref(database, `buyer/${seller}`), buyerData);
+      } else {
+        console.log("Data with the same UID already exists");
+      }
+
+      const sellerData = {
+        uid: seller,
+        displayName: sellername,
+      };
+      const sellerRef = ref(database, `seller/${userId}`);
+      const sellerSnapshot = await get(sellerRef);
+      let dataExist = false;
+      sellerSnapshot.forEach((sellerChild) => {
+        if (sellerChild.val().uid === sellerData.uid) {
+          dataExist = true;
+          return;
+        }
+      });
+      if (!dataExist) {
+        push(ref(database, `seller/${userId}`), sellerData);
+      } else {
+        console.log("Data with the same UID already exists");
+      }
+    }
+  };
+
   useEffect(() => {
-    getBuyerName();
+    getSellerName();
     handleRead();
     const path = ref(database, `chats/${id}`);
     onValue(path, (snapshot) => {
@@ -108,36 +171,20 @@ const ChatToBuyer = () => {
     });
   }, []);
 
-  const sendMessage = () => {
-    if (inputChat.trim() !== "") {
-      const currentTime = new Date();
-      const message: Message = {
-        sender: seller,
-        content: inputChat,
-        hours: `${currentTime.getHours()}:${
-          (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes()
-        }`,
-        buyerRead: false,
-      };
-      push(ref(database, `chats/${id}`), message);
-      setInputChat("");
-    }
-  };
-
   return (
-    <div className="flex flex-col justify-end items-center relative min-h-screen pb-20">
-      <div className="flex items-center fixed w-full lg:px-[390px] py-4 top-0 mb-4 text-xl font-bold text-white bg-[#135691] sm:px-[50px]">
+    <div className="flex flex-col min-h-screen pb-20 justify-end items-center relative">
+      <div className="flex items-center fixed w-full lg:px-[390px] py-4 top-0 mb-4 text-xl font-bold text-white bg-[#135699] sm:px-[50px]">
         <img
           src="https://i.ibb.co/ctyg3bB/avatar.png"
           className="w-10 mr-4"
           alt="img"
         />
-        {buyername}
+        {sellername}
       </div>
       {messages.map((message) => (
         <div
           className={`flex flex-col w-full max-w-2xl ${
-            message.sender === seller ? "items-end" : "items-start"
+            message.sender === buyer ? "items-end" : "items-start"
           }`}
         >
           <div className="flex flex-col max-w-xs rounded-lg px-4 py-2 mb-2.5 text-white bg-[#135699]">
@@ -165,4 +212,4 @@ const ChatToBuyer = () => {
   );
 };
 
-export default ChatToBuyer;
+export default ChatToSeller;

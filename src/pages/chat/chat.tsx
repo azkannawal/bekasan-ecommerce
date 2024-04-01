@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ListBuyer from "./../components/fragments/ListBuyer";
+import ListBuyer from "../../components/fragments/ListBuyer";
 import ListSeller from "@/components/fragments/ListSeller";
 
 const Chat = () => {
