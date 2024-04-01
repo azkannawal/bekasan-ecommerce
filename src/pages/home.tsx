@@ -7,9 +7,11 @@ import { useUser } from "@/context/RegisterContext";
 import { getNewToken } from "@/hooks/useToken";
 import { useNavigate } from "react-router-dom";
 import AddNavbar from "@/components/layouts/AddNavbar";
+import { useToast } from "@/components/ui/use-toast";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [verify, setVerify] = useState(false);
   const { accessToken, refreshToken } = useAuth();
   const { setUserData } = useUser();
@@ -40,7 +42,10 @@ const Home = () => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
       } else {
-        console.log(error.response);
+        toast({
+          variant: "destructive",
+          description: error.response.data.message,
+        });
       }
     }
   };
