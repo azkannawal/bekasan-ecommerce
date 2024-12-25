@@ -1,12 +1,20 @@
 type Props = {
   title: string;
-}
+};
 
-const HeaderAuth= ({ title }: Props) => {
+const HeaderAuth = ({ title }: Props) => {
   return (
-    <nav className="flex items-center gap-4 absolute w-full z-10 px-4 bg-white">
-      <img className="w-[80px]" src="https://i.ibb.co/t87W7vK/logo.png" alt="img" />
-      <h1 className="uppercase font-bold text-2xl text-[#0F172A]">{title}</h1>
+    <nav className="absolute z-10 flex w-full items-center bg-white">
+      <div className="mx-auto flex w-full max-w-[1400px] items-center gap-6 px-[calc(3.5vw+5px)]">
+        <img
+          className="w-[60px]"
+          src="./../../../public/logo-bekasan.png"
+          alt="img"
+        />
+        <h1 className="text-2xl font-bold capitalize text-[#0F172A]">
+          {title}
+        </h1>
+      </div>
     </nav>
   );
 };

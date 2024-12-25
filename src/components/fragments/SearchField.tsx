@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { Input } from "../ui/input";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
 import { useProductData } from "@/context/SearchContext";
+import { AuthContext } from "@/context/AuthContext";
 
 const SearchField = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const { setProductData, setSavedQuery } = useProductData();
 
   const handleSearch = async () => {
@@ -54,7 +54,7 @@ const SearchField = () => {
         onClick={() => navigate("/search")}
         placeholder="Cari Produk"
         type="text"
-        className="bg-white rounded-xl focus-visible:ring-1 focus-visible:ring-slate-500 border-none"
+        className="rounded-lg border-none bg-white"
       />
     </div>
   );

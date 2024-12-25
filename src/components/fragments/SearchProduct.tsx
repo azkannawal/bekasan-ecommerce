@@ -1,13 +1,13 @@
-import { useAuth } from "@/context/LoginContext";
+import { AuthContext } from "@/context/AuthContext";
 import { useProductData } from "@/context/SearchContext";
 import { getNewToken } from "@/hooks/useToken";
 import { axiosInstance } from "@/lib/axios";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const SearchProduct = () => {
   const { productData, setProductData } = useProductData();
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
 
   const getProduct = async () => {
     try {
@@ -45,14 +45,14 @@ const SearchProduct = () => {
       {productData
         ? productData!.map((item) => (
             <Link to={`/product/${item.product_id}`} key={item.product_id}>
-              <div className="flex flex-col h-full w-full max-w-80 items-center rounded-lg shadow-zinc-300 shadow">
+              <div className="flex flex-col h-full w-full max-w-80 items-center border border-[#e0e0e0] rounded-lg shadow-zinc-300 shadow">
                 <img
                   src={item.url_photo_product}
                   alt="img"
                   className="w-full h-full max-h-80 object-contain rounded-t-lg"
                 />
                 <div className="flex flex-col gap-1 pt-3 pb-4 w-full">
-                  <h1 className="w-full px-3 text-lg font-medium text-[#0F172A]">
+                  <h1 className="capitalize w-full px-3 font-medium text-[#0F172A]">
                     {item.product_name.length > 50
                       ? item.product_name.slice(0, 50) + "..."
                       : item.product_name}

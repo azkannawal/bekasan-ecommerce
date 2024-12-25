@@ -18,7 +18,7 @@ const Landing = () => {
     "landingpage02.png",
     "landingpage03.png",
     "landingpage04.png",
-  ]
+  ];
   const feature = [
     "Fitur Jual Beli Barang Bekas",
     "Fitur Jarak Terdekat",
@@ -38,9 +38,9 @@ const Landing = () => {
   return (
     <>
       {hide ? (
-        <main className="flex flex-col min-h-screen justify-center items-center fixed right-0 left-0 top-0 z-20">
-          <Carousel className="w-full max-w-4xl bg-white rounded-xl p-4 absolute z-10">
-            <div className="flex justify-end w-full">
+        <main className="fixed left-0 right-0 top-0 z-20 mx-auto flex min-h-screen flex-col items-center justify-center">
+          <Carousel className="absolute z-10 w-full max-w-[800px] rounded-xl bg-white p-4">
+            <div className="flex w-full justify-end">
               <IoIosCloseCircle
                 size={36}
                 color="#0F172A"
@@ -48,7 +48,7 @@ const Landing = () => {
                 className="cursor-pointer"
               />
             </div>
-            <h1 className="uppercase text-center font-bold text-3xl mb-7 text-[#0F172A]">
+            <h1 className="mb-7 text-center text-2xl font-bold text-[#0F172A]">
               Selamat Datang
             </h1>
             <CarouselContent>
@@ -57,20 +57,20 @@ const Landing = () => {
                   <Card>
                     <CardContent className="flex flex-col items-center justify-center gap-3">
                       <img
-                        className="h-96"
+                        className="max-h-[300px]"
                         src={img[index]}
                         alt="img"
                       />
                       {index < 3 ? (
                         <>
-                          <p className="uppercase font-bold text-xl mt-3 text-[#0F172A]">
+                          <p className="mt-3 text-xl font-bold text-[#0F172A]">
                             {feature[index]}
                           </p>
-                          <p className="text-lg">{description[index]}</p>
+                          <p>{description[index]}</p>
                         </>
                       ) : (
                         <>
-                          <p className="uppercase font-bold text-xl mt-3 text-[#0F172A]">
+                          <p className="mt-3 font-bold text-[#0F172A]">
                             {feature[index]}
                           </p>
                           <Link to="register">
@@ -80,14 +80,12 @@ const Landing = () => {
                       )}
                     </CardContent>
                   </Card>
-                  <div className="flex justify-center items-center mt-7">
+                  <div className="mt-7 flex items-center justify-center">
                     {[0, 1, 2, 3].map((item) => (
                       <span
                         key={item}
-                        className={`w-4 h-4 mx-1.5 rounded-full ${
-                          index === item
-                            ? "bg-[#0F172A] animate-pulse duration-800"
-                            : "bg-gray-300"
+                        className={`mx-1.5 h-2 w-2 rounded-full ${
+                          index === item ? "bg-[#0F172A]" : "bg-gray-300"
                         }`}
                       />
                     ))}
@@ -95,10 +93,10 @@ const Landing = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className=" h-14 w-14" />
+            <CarouselPrevious className="h-14 w-14" />
             <CarouselNext className="h-14 w-14" />
           </Carousel>
-          <div className="bg-slate-800/40 w-full min-h-screen backdrop-blur-md relative"></div>
+          <div className="relative min-h-screen w-full bg-slate-800/40 backdrop-blur-[3px]"></div>
         </main>
       ) : (
         <div></div>

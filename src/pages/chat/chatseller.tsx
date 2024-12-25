@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/RegisterContext";
 import app from "../../lib/firebase";
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
 import {
   getDatabase,
@@ -14,6 +13,7 @@ import {
   DataSnapshot,
   update,
 } from "firebase/database";
+import { AuthContext } from "@/context/AuthContext";
 const database = getDatabase(app);
 
 type Message = {
@@ -26,7 +26,7 @@ type Message = {
 const ChatToSeller = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const { userId, username } = useUser();
   const buyer: string = userId ? userId : "";
   const seller: string = id

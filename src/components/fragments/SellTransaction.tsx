@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { getNewToken } from "@/hooks/useToken";
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/context/LoginContext";
 import Modal from "./Modal";
+import { AuthContext } from "@/context/AuthContext";
 
 interface Product {
   product_name: string;
@@ -15,7 +15,7 @@ interface Product {
 }
 
 const SellTransaction = () => {
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const [modalState, setModalState] = useState<{ [key: string]: number }>({});
   const [data, setData] = useState<Product[]>([]);
   const [input, setInput] = useState<string>("");
@@ -87,7 +87,10 @@ const SellTransaction = () => {
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl font-bold">{item.product_name}</h1>
                 <h2 className="text-lg font-semibold text-[#135699]">
-                  {parseFloat(item.product_price).toLocaleString("id-ID", {style: "currency", currency: "IDR"})}
+                  {parseFloat(item.product_price).toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
                 </h2>
                 <h3 className="font-semibold">{item.owner_name}</h3>
               </div>

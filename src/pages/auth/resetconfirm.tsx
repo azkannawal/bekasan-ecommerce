@@ -70,8 +70,8 @@ const ResetConfirm = () => {
   };
 
   return (
-    <AddHeaderAuth title="reset kata sandi">
-      <main className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
+    <AddHeaderAuth title="Bekasan">
+      <main className="relative flex min-h-screen items-center justify-around bg-[#135699] px-10">
         <img
           className="w-[450px] max-w-lg pt-16"
           src="https://i.ibb.co/S32Zj7J/reset01.png"
@@ -79,15 +79,15 @@ const ResetConfirm = () => {
         />
         <form
           onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-20 w-[450px] gap-7 p-6 rounded-lg bg-white"
+          className="mt-20 flex w-[450px] flex-col items-center justify-center gap-7 rounded-lg bg-white p-6"
         >
-          <h1 className="self-start text-2xl font-semibold mb-3">
+          <h1 className="mb-3 self-start text-2xl font-semibold">
             Reset kata sandi
           </h1>
           <div className="relative w-full">
             <span
               onClick={() => toggle(1)}
-              className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
+              className="absolute right-0 top-0 cursor-pointer py-4 pr-3"
             >
               {visible1 ? (
                 <RiEyeOffFill className="text-slate-400" />
@@ -108,7 +108,7 @@ const ResetConfirm = () => {
           <div className="relative w-full">
             <span
               onClick={() => toggle(2)}
-              className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
+              className="absolute right-0 top-0 cursor-pointer py-4 pr-3"
             >
               {visible2 ? (
                 <RiEyeOffFill className="text-slate-400" />

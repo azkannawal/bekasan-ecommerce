@@ -1,11 +1,11 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@/context/LoginContext";
 import { axiosInstance } from "@/lib/axios";
 import { getNewToken } from "@/hooks/useToken";
+import { AuthContext } from "@/context/AuthContext";
 
 interface ModalProps {
   option: number;
@@ -32,7 +32,7 @@ const Modal = ({
   input,
   setInput,
 }: ModalProps) => {
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const { toast } = useToast();
   const match: boolean = input === id;
   const chooseFunction = { option };

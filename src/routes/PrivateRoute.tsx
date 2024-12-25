@@ -1,9 +1,10 @@
 import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@/context/LoginContext";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = () => {
-  const { accessToken } = useAuth();
+  const { accessToken } = useContext(AuthContext);
   const { toast } = useToast();
 
   if (accessToken) {
@@ -14,7 +15,7 @@ const PrivateRoute = () => {
       title: "Anda perlu login terlebih dahulu",
     });
   }
-  
+
   return <Navigate to="/login" />;
 };
 

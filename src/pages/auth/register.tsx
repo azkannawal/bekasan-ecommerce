@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Address from "@/components/fragments/Address";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import { useState } from "react";
-import { addressUser } from "@/context/AddressContext";
+// import { addressUser } from "@/context/AddressContext";
 import { axiosInstance } from "@/lib/axios";
 import { Link, useNavigate } from "react-router-dom";
 import { ReloadIcon } from "@radix-ui/react-icons";
@@ -12,7 +12,7 @@ import { useUser } from "@/context/RegisterContext";
 import AddHeaderAuth from "@/components/layouts/AddHeaderAuth";
 
 const Register = () => {
-  const { user } = addressUser();
+  // const { user } = addressUser();
   const { setUserData } = useUser();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -23,9 +23,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const address = user ? user.address : "";
-  const longitude = user ? user.longitude : "";
-  const latitude = user ? user.latitude : "";
+  const address = "Malang";
+  const longitude = -7.95217615839509;
+  const latitude = 112.61271625437;
   const data = {
     name: name,
     email: email,
@@ -56,7 +56,7 @@ const Register = () => {
             variant: "destructive",
             title: errorMessage,
             description: description,
-          })
+          }),
         );
       } else if (
         error.response &&
@@ -88,93 +88,95 @@ const Register = () => {
   };
 
   return (
-    <AddHeaderAuth title="daftar">
-      <main className="flex justify-around items-center relative bg-[#135699] pt-2 px-10 min-h-screen">
-        <img
-          className="w-[450px] max-w-lg pt-16"
-          src="./login01.png"
-          alt="img"
-        />
-        <form
-          onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-16 w-[450px] gap-6 p-6 rounded-lg bg-white"
-        >
-          <h1 className="self-start text-2xl font-semibold mb-3">Daftar</h1>
-          <Input
-            placeholder="Nama akun"
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyPress={handleKeyPress}
+    <AddHeaderAuth title="bekasan">
+      <main className="relative min-h-screen w-full bg-[#135699] pt-2">
+        <div className="mx-auto mt-[80px] flex w-full max-w-[1400px] items-center justify-around px-[calc(3.5vw+5px)]">
+          <img
+            className="w-[450px] max-w-lg pt-16"
+            src="./login01.png"
+            alt="img"
           />
-          <Input
-            placeholder="Email akun UB"
-            type="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-          <div className="relative w-full">
-            <span
-              onClick={() => toggle(1)}
-              className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
-            >
-              {visible1 ? (
-                <RiEyeOffFill className="text-slate-400" />
-              ) : (
-                <RiEyeFill className="text-[#0F172A]" />
-              )}
-            </span>
+          <form
+            onSubmit={onSubmit}
+            className="flex w-[450px] flex-col items-center justify-center gap-6 rounded-lg bg-white p-6"
+          >
+            <h1 className="mb-3 self-start text-2xl font-semibold">Daftar</h1>
             <Input
-              placeholder="Kata sandi"
-              type={visible1 ? "text" : "password"}
-              autoComplete="new-password"
+              placeholder="Nama"
+              type="text"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               onKeyPress={handleKeyPress}
             />
-          </div>
-          <div className="relative w-full">
-            <span
-              onClick={() => toggle(2)}
-              className="absolute cursor-pointer py-4 top-0 right-0 pr-3"
-            >
-              {visible2 ? (
-                <RiEyeOffFill className="text-slate-400" />
-              ) : (
-                <RiEyeFill className="text-[#0F172A]" />
-              )}
-            </span>
             <Input
-              placeholder="Konfirmasi kata sandi"
-              type={visible2 ? "text" : "password"}
-              autoComplete="new-password"
+              placeholder="Email UB"
+              type="email"
+              autoComplete="email"
               required
-              value={confirm}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               onKeyPress={handleKeyPress}
-              onChange={(e) => setConfirm(e.target.value)}
             />
-          </div>
-          <Address />
-          {loadButton ? (
-            <Button className="h-12 px-12" disabled>
-              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              Tunggu
-            </Button>
-          ) : (
-            <Button className="h-12 px-16">Daftar</Button>
-          )}
-          <p className="text-center ">
-            Sudah punya akun?{" "}
-            <Link to="/login" className="font-semibold hover:underline">
-              Masuk
-            </Link>
-          </p>
-        </form>
+            <div className="relative w-full">
+              <span
+                onClick={() => toggle(1)}
+                className="absolute right-0 top-0 cursor-pointer py-4 pr-3"
+              >
+                {visible1 ? (
+                  <RiEyeOffFill className="text-slate-400" />
+                ) : (
+                  <RiEyeFill className="text-[#0F172A]" />
+                )}
+              </span>
+              <Input
+                placeholder="Kata sandi"
+                type={visible1 ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+            </div>
+            <div className="relative w-full">
+              <span
+                onClick={() => toggle(2)}
+                className="absolute right-0 top-0 cursor-pointer py-4 pr-3"
+              >
+                {visible2 ? (
+                  <RiEyeOffFill className="text-slate-400" />
+                ) : (
+                  <RiEyeFill className="text-[#0F172A]" />
+                )}
+              </span>
+              <Input
+                placeholder="Konfirmasi kata sandi"
+                type={visible2 ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                value={confirm}
+                onKeyPress={handleKeyPress}
+                onChange={(e) => setConfirm(e.target.value)}
+              />
+            </div>
+            <Address />
+            {loadButton ? (
+              <Button className="h-12 px-12" disabled>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Tunggu
+              </Button>
+            ) : (
+              <Button className="h-12 px-16">Daftar</Button>
+            )}
+            <p className="text-center">
+              Sudah punya akun?{" "}
+              <Link to="/login" className="font-semibold hover:underline">
+                Masuk
+              </Link>
+            </p>
+          </form>
+        </div>
       </main>
     </AddHeaderAuth>
   );

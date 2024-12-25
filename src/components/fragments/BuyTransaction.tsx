@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
 import { useUser } from "@/context/RegisterContext";
+import { AuthContext } from "@/context/AuthContext";
 
 interface Product {
   product_name: string;
@@ -18,7 +19,7 @@ interface Product {
 }
 
 const BuyTransaction = () => {
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const [data, setData] = useState<Product[]>([]);
   const [modalState, setModalState] = useState<{ [key: string]: number }>({});
   const [input, setInput] = useState<string>("");

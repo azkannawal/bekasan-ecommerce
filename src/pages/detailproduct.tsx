@@ -1,15 +1,15 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
 import BuyProduct from "./../components/fragments/BuyProduct";
 import AddNavbar from "@/components/layouts/AddNavbar";
 import { useUser } from "@/context/RegisterContext";
+import { AuthContext } from "@/context/AuthContext";
 
 const DetailProduct = () => {
   const { id } = useParams();
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const { userId } = useUser();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState({

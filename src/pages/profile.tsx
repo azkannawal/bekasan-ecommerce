@@ -1,19 +1,18 @@
-import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@/context/LoginContext";
+import { AuthContext } from "@/context/AuthContext";
 import { useUser } from "@/context/RegisterContext";
 import { getNewToken } from "@/hooks/useToken";
 import { axiosInstance } from "@/lib/axios";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const Profile = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { accessToken, refreshToken } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const { setUserData } = useUser();
-  const { setTokens } = useAuth();
   const [data, setData] = useState({
     name: "",
     email: "",

@@ -38,8 +38,8 @@ const Reset = () => {
   };
 
   return (
-    <AddHeaderAuth title="reset kata sandi">
-      <main className="flex justify-around items-center min-h-screen relative px-10 bg-[#135699]">
+    <AddHeaderAuth title="bekasan">
+      <main className="relative flex min-h-screen items-center justify-around bg-[#135699] px-10">
         <img
           className="w-[450px] max-w-lg pt-16"
           src="./reset01.png"
@@ -47,9 +47,9 @@ const Reset = () => {
         />
         <form
           onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-16 w-[450px] gap-6 p-6 rounded-lg bg-white"
+          className="mt-16 flex w-[450px] flex-col items-center justify-center gap-6 rounded-lg bg-white p-6"
         >
-          <h1 className="self-start text-2xl font-semibold mb-3">
+          <h1 className="mb-3 self-start text-2xl font-semibold">
             Reset kata sandi
           </h1>
           <Input

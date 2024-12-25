@@ -1,28 +1,28 @@
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { useToast } from "../ui/use-toast";
+import { useContext, useState } from "react";
 import { axiosInstance } from "@/lib/axios";
-import { useAuth } from "@/context/LoginContext";
 import { getNewToken } from "@/hooks/useToken";
-import { Input } from "../ui/input";
 import useSnap from "@/hooks/useSnap";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { AuthContext } from "@/context/AuthContext";
+import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
+import { Input } from "../ui/input";
 
 type BuyProductProps = {
   id: string;
-}
+};
 
 const BuyProduct = ({ id }: BuyProductProps) => {
   const { toast } = useToast();
   const [check, setCheck] = useState<boolean>(false);
   const [buy, setBuy] = useState<boolean>(false);
   const [loadButton, setLoadButton] = useState<boolean>(false);
-  const { accessToken, refreshToken, setTokens } = useAuth();
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const { snapPopup } = useSnap();
 
   const handlePay = async () => {
     try {
-      setLoadButton(true)
+      setLoadButton(true);
       const response = await axiosInstance.post(`/product/${id}`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -77,19 +77,20 @@ const BuyProduct = ({ id }: BuyProductProps) => {
           </div>
           {check ? (
             loadButton ? (
-            <Button className="h-12 px-12" disabled>
-              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              Tunggu
-            </Button>
-          ) : (
-            <Button
-              onClick={() => {
-                handlePay();
-              }}
-              className="py-[22px] bg-white text-[#0f1720 hover:bg-white]"
-            >
-              Beli
-            </Button>)
+              <Button className="h-12 px-12" disabled>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Tunggu
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  handlePay();
+                }}
+                className="py-[22px] bg-white text-[#0f1720 hover:bg-white]"
+              >
+                Beli
+              </Button>
+            )
           ) : (
             <Button disabled className="py-[22px] bg-white text-[#0f1720]">
               Beli

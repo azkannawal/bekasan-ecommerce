@@ -1,24 +1,16 @@
-import { useAuth } from "@/context/LoginContext";
+import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { axiosInstance } from "@/lib/axios";
+import { AuthContext } from "@/context/AuthContext";
 import { useProductData } from "@/context/SearchContext";
 import { getNewToken } from "@/hooks/useToken";
-import { axiosInstance } from "@/lib/axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { CategoryProps, Product } from "@/models/Category";
+import getCategory from "@/services/getCategory";
 
-type Props = {
-  style: string;
-}
-
-type Product = {
-  id: string;
-  name: string;
-  url_category: string;
-}
-
-const Category = ({ style } : Props) => {
+const Category = ({ style }: CategoryProps) => {
+  const { accessToken, refreshToken, setTokens } = useContext(AuthContext);
   const [category, setCategory] = useState<Product[]>([]);
   const { setProductData } = useProductData();
-  const { accessToken, refreshToken, setTokens } = useAuth();
 
   const chooseCategory = async (category: any) => {
     try {
@@ -71,22 +63,14 @@ const Category = ({ style } : Props) => {
     }
   };
 
-  const getCategoryProduct = async () => {
-    const config = {
-      headers: {
-        "ngrok-skip-browser-warning": true,
-      },
-    };
-    try {
-      const response = await axiosInstance.get("/product/homepage", config);
-      setCategory(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const getData = async () => {
+    getCategory((data: any) => {
+      setCategory(data);
+    });
   };
 
   useEffect(() => {
-    getCategoryProduct();
+    getData();
     if (accessToken) {
       defaultCategory();
     }
@@ -94,9 +78,9 @@ const Category = ({ style } : Props) => {
 
   return (
     <main
-      className={`${style} flex flex-col justify-center items-center relative z-1 pb-20`}
+      className={`${style} z-1 relative mx-auto flex max-w-[1400px] flex-col items-center justify-between px-[calc(3.5vw+5px)] pb-20`}
     >
-      <h1 className="self-start pt-8 pb-8 px-10 font-bold text-[28px] text-[#0F172A]">
+      <h1 className="self-start px-10 pb-8 pt-8 text-[28px] font-bold text-[#0F172A]">
         Kategori
       </h1>
       <div className="grid grid-cols-4 gap-x-24 gap-y-14 px-12">
@@ -108,13 +92,13 @@ const Category = ({ style } : Props) => {
             }}
             to={"/search"}
           >
-            <div className="flex flex-col h-full justify-center items-center gap-2 rounded-lg shadow-zinc-300 shadow">
+            <div className="flex h-full flex-col items-center justify-center border border-[#e0e0e0] gap-2 rounded-lg p-4 shadow-sm shadow-zinc-300">
               <img
-                className="w-full h-full max-w-60 max-h-60 object-contain rounded-lg p-2"
+                className="h-full max-h-48 rounded-lg object-cover"
                 src={item.url_category}
                 alt={`img`}
               />
-              <p className="text-center text-lg font-medium p-3 text-[#0F172A]">
+              <p className="text-center font-medium text-[#0F172A]">
                 {item.name}
               </p>
             </div>
