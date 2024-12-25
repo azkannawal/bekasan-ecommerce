@@ -41,7 +41,7 @@ const Navbar = () => {
           <Link to="/" className="w-auto">
             <img
               className="w-[60px]"
-              src="./../../../public/logo-bekasan.png"
+              src="https://i.ibb.co.com/MVJKSgy/logo-bekasan.png"
               alt="img"
             />
           </Link>
